@@ -77,7 +77,7 @@ void Manager::initDefaults()
     setDefault("font/family", "monospace");
     setDefault("font/antialias", true);
 
-    setDefault("theme", "default");
+    setDefault("theme", "monokai");
 
     endGroup(); // editor
 

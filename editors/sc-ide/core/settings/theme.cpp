@@ -172,6 +172,37 @@ void Theme::fillDark()
     addToTheme(mFormats, "postwindowemphasis", QColor("#e4e4e4"), Qt::transparent, true);
 }
 
+void Theme::fillMonokai()
+{
+    QColor monokaiFG("#f6f6f0");
+    QColor monokaiBG("#272822");
+
+    addToTheme(mFormats, "text", monokaiFG, monokaiBG);
+    addToTheme(mFormats, "currentLine", QColor("#000000"), QColor("#f4f4f4"));
+    addToTheme(mFormats, "searchResult", QColor("#f8f8f2"), QColor("#49483e"));
+    addToTheme(mFormats, "matchingBrackets", monokaiFG, Qt::transparent, true);
+    addToTheme(mFormats, "mismatchedBrackets", QColor("#ffffff"), QColor("#960000"));
+    addToTheme(mFormats, "evaluatedCode", QColor("#f8f8f2"), QColor("#364a5c"));
+    addToTheme(mFormats, "whitespace", QColor("#7f7f7f"));
+    addToTheme(mFormats, "keyword", QColor("#f92672"));
+    addToTheme(mFormats, "built-in", QColor("#66d9ef"));
+    addToTheme(mFormats, "env-var", QColor("#66d9ef"));
+    addToTheme(mFormats, "class", QColor("#a5e12e"));
+    addToTheme(mFormats, "number", QColor("#ae81ff"));
+    addToTheme(mFormats, "symbol", QColor("#ae81ff"));
+    addToTheme(mFormats, "string", QColor("#e5da74"));
+    addToTheme(mFormats, "char", QColor("#ae81ff"));
+    addToTheme(mFormats, "comment", QColor("#75715e"));
+    addToTheme(mFormats, "primitive", QColor("#aeb2ff"));
+    addToTheme(mFormats, "lineNumbers", QColor("#75715e"));
+    addToTheme(mFormats, "selection", QColor("#f8f8f2"), QColor("#49483e"));
+    addToTheme(mFormats, "postwindowtext", QColor("#f7f7f1"));
+    addToTheme(mFormats, "postwindowerror", QColor("#ffffff"), QColor("#960000"));
+    addToTheme(mFormats, "postwindowwarning", QColor("#e5da74"));
+    addToTheme(mFormats, "postwindowsuccess", QColor("#a5e12e"));
+    addToTheme(mFormats, "postwindowemphasis", monokaiFG, Qt::transparent, true);
+}
+
 void Theme::fillUser(const QString & name, const Manager *settings)
 {
     QString group = QStringLiteral("IDE/editor/themes/%1/").arg(name);
@@ -209,6 +240,9 @@ Theme::Theme(const QString & _name, Manager * settings)
     } else if (mName == "dark") {
         fillDark();
         mLocked = true;
+    } else if (mName == "monokai") {
+        fillMonokai();
+        mLocked = true;
     } else {
         fillUser(mName, settings);
         mLocked = false;
@@ -226,6 +260,8 @@ Theme::Theme(const QString & _name, const QString & _source, Manager * settings)
         fillDefault();
     } else if (_source == "dark") {
         fillDark();
+    } else if (_source == "monokai") {
+        fillMonokai();
     } else {
         fillUser(_source, settings);
     }
@@ -276,6 +312,7 @@ QList<QString> Theme::availableThemes()
 
     themes.append("default");
     themes.append("dark");
+    themes.append("monokai");
 
     mSettings->beginGroup("IDE/editor/themes");
     themes.append(mSettings->childGroups());
