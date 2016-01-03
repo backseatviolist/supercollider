@@ -102,10 +102,12 @@ SCDocHTMLRenderer {
     }
 
     *renderHeader {|stream, doc|
-        var x, cats, m, z;
+        var x, cats, m, z, main;
         var folder = doc.path.dirname;
         var undocumented = false;
         if(folder==".",{folder=""});
+
+        main = (folder=="") and: {doc.title=="Help"};
 
         // FIXME: use SCDoc.helpTargetDir relative to baseDir
         baseDir = ".";
@@ -128,31 +130,38 @@ SCDocHTMLRenderer {
 
         stream
         << "<ul id='menubar'></ul>\n"
-        << "<body onload='fixTOC();prettyPrint()'>\n"
+        << "<body" << if(main, " class='mainhelp'", "") << " onload='fixTOC();prettyPrint()'>\n"
         << "<div class='contents'>\n"
-        << "<div class='header'>\n"
-        << "<div id='label'>SuperCollider " << folder.asString.toUpper;
-        if(doc.isExtension) {
-            stream << " (extension)";
-        };
-        stream << "</div>\n";
+        << "<div class='header'>\n";
 
-        doc.categories !? {
+        if(main) {
+            stream << "<div id='headerimage'><img src='" << baseDir << "/images/sc_logo_spiral_white.png'/></div>";
+        } {
             stream
-            << "<div id='categories'>"
-            << (doc.categories.collect {|r|
-                "<a href='"++baseDir +/+ "Browse.html#"++r++"'>"++r++"</a>"
-            }.join(", "))
-            << "</div>\n";
+            << "<div id='label'>SuperCollider " << folder.asString.toUpper;
+            if(doc.isExtension) {
+                stream << " (extension)";
+            };
+            stream << "</div>\n";
+
+            doc.categories !? {
+                stream
+                << "<div id='categories'>"
+                << (doc.categories.collect {|r|
+                    "<a href='"++baseDir +/+ "Browse.html#"++r++"'>"++r++"</a>"
+                }.join(", "))
+                << "</div>\n";
+            };
         };
 
-        stream << "<h1>" << doc.title;
-        if((folder=="") and: {doc.title=="Help"}) {
-            stream << "<span class='headerimage'><img src='" << baseDir << "/images/SC_icon.png'/></span>";
-        };
         stream
-        << "</h1>\n"
-        << "<div id='summary'>" << this.escapeSpecialChars(doc.summary) << "</div>\n"
+        << "<h1>" << if(main, "SuperCollider " ++ Main.version, doc.title) << "</h1>\n";
+
+        if(main.not) {
+            stream << "<div id='summary'>" << this.escapeSpecialChars(doc.summary) << "</div>\n";
+        };
+
+        stream
         << "</div>\n"
         << "<div class='subheader'>\n";
 

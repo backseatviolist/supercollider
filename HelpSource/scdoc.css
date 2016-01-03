@@ -1,8 +1,8 @@
 body {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Droid Sans", Arial, Helvetica, sans-serif;
     font-size: 10pt;
-    color: black;
-    background: white;
+    color: #f8f8f2;
+    background: #272822;
 /*    max-width: 60em;*/
 /*    margin-left: 20em;*/
     padding: 0;
@@ -44,7 +44,7 @@ p {
 
 a:link, a:visited, a:hover {
     text-decoration: none;
-    color: #449;
+    color: #AE81FF;
     /* add padding to work around "text-decoration: underline" not
      * having effect when hovered if font size less then 11pt */
     padding-bottom: 1px;
@@ -60,12 +60,12 @@ a:hover {
 
 .inheritedmets_class {
     font-weight: bold;
-    color: #555;
+    color: #888;
     margin-top: 0.5em;
     margin-bottom: 0.25em;
 }
 .inheritedmets_class a {
-    color: #333;
+    color: #aaa;
 }
 ul.inheritedmets {
     list-style: none;
@@ -75,7 +75,7 @@ ul.inheritedmets {
     margin-top: 0.25em;
 }
 ul.inheritedmets li {
-    font-family: monospace;
+    font-family: "Monaco", monospace;
 }
 a.inheritedmets_toggle {
     font-size: 9pt;
@@ -90,7 +90,7 @@ a.inheritedmets_toggle:hover {
 }
 
 a.subclass_toggle {
-    color: #555;
+    color: #888;
     font-weight: normal;
 }
 
@@ -101,16 +101,12 @@ a.subclass_toggle:hover {
 
 
 #menubar {
-    font-family: Arial, Helvetica, sans-serif;
     width: 100%;
     position: fixed;
-/*    background: #555;*/
-    background: #eee;
+    background-color: #3c3e35;
     top: 0px;
     padding: 2px;
     margin: 0px;
-    border-bottom: 1px solid #bbb;
-/*    border-bottom: 2px solid #999;*/
     z-index: 30;
 }
 
@@ -121,37 +117,37 @@ a.subclass_toggle:hover {
     padding:0px;
     padding-left: 0.75em;
     padding-right: 0.75em;
-/*    border-right: 1px solid #999;*/
-    border-right: 1px solid #ddd;
+    border-right: 1px solid #4d4f43;
     font-size: 10pt;
     display: block;
 }
 
 .menuitem a {
 /*    color: #ddd;*/
-    color: #666;
+    color: #f8f8f2;
 }
 .menuitem a:hover {
     text-decoration: none;
-    color: black;
+    color: #f8f8f2;
 }
 
 #topdoctitle {
 /*    font-weight: bold;*/
     font-style: italic;
 /*    color: #fff;*/
-    color: #444;
+    color: #aaa;
     cursor: pointer;
 }
 
 .submenu {
     margin-top: 2px;
     padding: 0.5em;
-    background: #eee;
+    background: #49483e;
     display: none;
     position: absolute;
-    border: 1px solid #aaa;
     border-radius: 4px;
+    border-bottom: 5px solid #3d3c34;
+    box-shadow: 0px 2px 3px rgba(0,0,0,0.5);
 }
 
 .submenu a {
@@ -164,34 +160,47 @@ a.subclass_toggle:hover {
 		white-space: nowrap;
 		text-align: left;
 /*		text-decoration: none;*/
-		color: #447;
+		color: #f8f8f2;
 		font-weight: bold;
 }
 
 .toc_search {
-    margin-left: 10px;
-    color: #999;
     font-size: 9pt;
+    margin-left: 10px;
 }
 
-.top_search input {
-    border: 1px solid #ddd;
+.toc_search input {
+    margin-left: 10px;
+    color: inherit;
+    border: none;
+    background: #3d3c34;
 }
 
 a.navlink {
 /*    color: #fff;*/
-    color: #447;
+    color: #f8f8f2;
     font-weight: bold;
 }
 
 
 .header {
-  border-bottom: 2.5px solid #000; padding-bottom:0.18em;
+    border-bottom: 2.5px solid #f8f8f2; padding-bottom:0.18em;
+}
+#headerimage {
+    margin-top: 1em;
+    text-align: center;
+}
+body.mainhelp .header {
+    border-bottom: none;
+}
+body.mainhelp .header h1 {
+    margin: 0.5em 0 0.6em;
+    text-align: center;
 }
 #label, #label a {
     font-weight: bold;
-    color: #999;
-    border-bottom: 1px solid #bbb;
+    color: #75715e;
+    border-bottom: 1px solid #75715e;
 }
 #summary {
     font-weight: normal;
@@ -208,10 +217,6 @@ a.navlink {
 }
 #filename {
     word-break: break-all;
-}
-.headerimage {
-    float: right;
-    margin-right: 1ex;
 }
 
 .subheader {
@@ -289,7 +294,7 @@ dd {
 }
 
 code, pre {
-    font-family: monospace;
+    font-family: "Monaco", monospace;
     font-size: 9pt;
 }
 
@@ -323,18 +328,18 @@ pre.code {
 }
 
 .methodname, .imethodname, .cmethodname {
-    font-family: monospace;
+    font-family: "Monaco", monospace;
     font-size: 1em;
     font-weight: normal;
     margin-bottom: 0em;
     margin-top: 0.75em;
     padding: 0.25em;
     border: none;
-    background: #e7ebe7;
+    /*background: #49483e;*/
 }
 
 .methodname a, .imethodname a, .cmethodname a {
-    color: black;
+    color: inherit;
     font-weight: bold;
 }
 
@@ -350,14 +355,14 @@ pre.code {
 .extmethod {
     font-size: 9pt;
     color: #444;
-    background: #fee;
+    background: #49483e;
     padding-left: 0.2em;
     text-align: right;
 }
 
 .supmethod {
     font-size: 9pt;
-    color: #444;
+    color: #49483e;
     background: #ffe;
     padding-left: 0.2em;
     text-align: right;
@@ -391,10 +396,11 @@ td p {
 
 .note, .warning {
 /*    border-left: 4px solid #eea;*/
-    background: #f7f7d7;
+    background: #3c3e35;
     padding: 0.5em;
     margin-top: 1em;
     margin-bottom: 1em;
+    border-radius: 0.5em;
 }
 .notelabel, .warninglabel {
     font-weight: bold;
@@ -432,9 +438,7 @@ td p {
     padding: 10px;
     height: 100%;
     overflow: auto;
-/*    background: #eee;*/
-    background: #fff;
-    border-right: 1px solid #bbb;
+    background: #3c3e35;
 }
 
 #sidetoc a:hover {
@@ -449,11 +453,12 @@ td p {
     line-height: 130%;
     display: none;
     overflow: auto;
-    background: #fff;
+    background: #49483e;
     position: absolute;
-    border: 1px solid #aaa;
     margin-top: 2px;
     border-radius: 4px;
+    border-bottom: 5px solid #3d3c34;
+    box-shadow: 0px 2px 3px rgba(0,0,0,0.5);
 }
 #toctitle {
     border-bottom: 1px solid #aaa;
@@ -485,34 +490,34 @@ ul.toc li a {
 }
 
 ul.toc li a:hover {
-    background: #eee;
+    background: #57564a;
 }
 
 .toc1 {
     font-weight: bold;
 }
 .toc1 a {
-    color: #444;
+    color: #f8f8f2;
 }
 .toc2 {
     font-weight: normal;
 }
 .toc2 a {
-    color: #444;
+    color: #f8f8f2;
 }
 .toc3 {
-    font-family: monospace;
+    font-family: "Monaco", monospace;
     font-weight: normal;
 /*    font-size: 9.5pt;*/
 }
 .toc3 a {
-    color: #555;
+    color: #f8f8f2;
 }
 
 a.popoutlink {
     float: right;
     font-size: 9pt;
-    color: #558;
+    color: #f8f8f2;
     padding-right: 8px;
     display: inline-block;
 }
@@ -559,17 +564,17 @@ a.clslnk {
 
 /* Pretty printing styles. Used with prettify.js. */
 
-.str { color: #070; } /* strings */
-.kwd { color: #880; } /* special values like true, nil.. */
-.com { color: #822; } /* comments */
-.typ { color: #008; } /* class names */
-.lit { color: #066; } /* numbers and character literals */
-.pun { color: #555; } /* punctuation */
-.pln { color: #000; } /* plain text, methods and variable names */
-.tag { color: #059; } /* special variables like super, thisProcess... */
-.dec { color: #508; } /* declarations like var, const... */
-.atn { color: #285; } /* symbols */
-.atv { color: #750; } /* environment vars */
+.str { color: #e6db74; } /* strings */
+.kwd { color: #ae81ff; } /* special values like true, nil.. */
+.com { color: #75715e; } /* comments */
+.typ { color: #a6e22e; } /* class names */
+.lit { color: #ae81ff; } /* numbers and character literals */
+.pun { color: #f8f8f2; } /* punctuation */
+.pln { color: #f8f8f2; } /* plain text, methods and variable names */
+.tag { color: #66d9ef; } /* special variables like super, thisprocess... */
+.dec { color: #f92672; } /* declarations like var, const... */
+.atn { color: #ae81ff; } /* symbols */
+.atv { color: #66d9ef; } /* environment vars */
 
 /* Specify class=linenums on a pre to get line numbering */
 ol.linenums { margin-top: 0; margin-bottom: 0 } /* IE indents via margin-left */

@@ -557,7 +557,6 @@ function fixTOC() {
         ts.type = "text";
         ts.id = "toc_search";
         ts.value = "";
-        ts.style.border = "1px solid #ddd";
         allItems = toc.getElementsByTagName("ul")[0].getElementsByTagName("li");
         ts.onkeyup = toc_search;
         div.appendChild(document.createTextNode("Filter:"));
