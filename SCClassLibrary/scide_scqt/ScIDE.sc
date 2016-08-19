@@ -611,6 +611,8 @@ Document {
 
 	close { ScIDE.close(quuid); }
 
+	free { this.close; }
+
 /*	// asynchronous get
 	// range -1 means to the end of the Document
 	getText {|action, start = 0, range -1|
