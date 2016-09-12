@@ -23,7 +23,7 @@ definitionlist::
 
 section:: UGen basics
 
-These helper macros assume that there is a ugen object called code::unit:: in the local scope.
+These helper macros assume that there is a pointer to a ugen called code::unit:: in the local scope.
 
 definitionlist::
 ## code::IN(index)::
