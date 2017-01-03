@@ -81,30 +81,45 @@ SCDocHTMLRenderer {
 		};
 	}
 
-	*makeArgString {|m, par=true|
-		var res = "";
+	*makeArgString { |method, parenthesize = true|
+		var result = "";
 		var value;
-		var l = m.argNames;
-		var last = l.size-1;
-		l.do {|a,i|
-			if (i>0) { //skip 'this' (first arg)
-				if(i==last and: {m.varArgs}) {
-					res = res ++ " <span class='argstr'>" ++ "... " ++ a;
+		var argNames = method.argNames;
+		var last = argNames.size - 1;
+		var isDoneAction;
+		argNames.do { |argName, index|
+			if(index > 0) { // Skip the first argument, which is "this."
+				if(index == last and: { method.varArgs }) {
+					result = result ++ " <span class='argstr'>" ++ "... " ++ argName;
 				} {
-					if (i>1) { res = res ++ ", " };
-					res = res ++ "<span class='argstr'>" ++ a;
-					(value = m.prototypeFrame[i]) !? {
-						value = if(value.class===Float) { value.asString } { value.cs };
-						res = res ++ ": " ++ value;
+					if(index > 1) { result = result ++ ", " };
+					result = result ++ "<span class='argstr'>" ++ argName;
+					value = method.prototypeFrame[index];
+					value !? {
+						// Render doneActions using the new Done.xxx constants
+						isDoneAction =
+							(argName == \doneAction) and:
+							{ value.isInteger } and:
+							{ 0 <= value } and:
+							{ value < 30 }; // TODO
+						isDoneAction.postln;
+						value = if(isDoneAction) {
+							"Done.noop" // TODO
+						} {
+							if(value.class === Float)
+								{ value.asString }
+								{ value.cs };
+						};
+						result = result ++ ": " ++ value;
 					};
 				};
-				res = res ++ "</span>";
+				result = result ++ "</span>";
 			};
 		};
-		if (res.notEmpty and: par) {
-			^("("++res++")");
+		if(result.notEmpty and: parenthesize) {
+			^("(" ++ result ++ ")");
 		};
-		^res;
+		^result;
 	}
 
 	*renderHeader {|stream, doc|
