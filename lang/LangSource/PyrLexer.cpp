@@ -434,12 +434,12 @@ start:
 		if (!emptyls(&brackets)) {
 			if ((d = popls(&brackets)) != (intptr_t) OPENSQUAR) {
 				fatal();
-				post("opening bracket was a '%c', but found a '%c'\n",d,c);
+				//post("opening bracket was a '%c', but found a '%c'\n",d,c);
 				goto error2;
 			}
 		} else {
 			fatal();
-			post("unmatched '%c'\n",c);
+//			post("unmatched '%c'\n",c);
 			goto error2;
 		}
 		r = c;
@@ -449,12 +449,12 @@ start:
 		if (!emptyls(&brackets)) {
 			if ((d = popls(&brackets)) != OPENPAREN) {
 				fatal();
-				post("opening bracket was a '%c', but found a '%c'\n",d,c);
+//				post("opening bracket was a '%c', but found a '%c'\n",d,c);
 				goto error2;
 			}
 		} else {
 			fatal();
-			post("unmatched '%c'\n",c);
+//			post("unmatched '%c'\n",c);
 			goto error2;
 		}
 		r = c;
@@ -464,13 +464,13 @@ start:
 		if (!emptyls(&brackets)) {
 			if ((d = popls(&brackets)) != OPENCURLY) {
 				fatal();
-				post("opening bracket was a '%c', but found a '%c'\n",d,c);
+//				post("opening bracket was a '%c', but found a '%c'\n",d,c);
 				goto error2;
 			}
 			lastClosedFuncCharNo = popls(&closedFuncCharNo);
 		} else {
 			fatal();
-			post("unmatched '%c'\n",c);
+//			post("unmatched '%c'\n",c);
 			goto error2;
 		}
 		r = c;
@@ -760,8 +760,8 @@ symbol3 : {
 			c = input();
 			if (c == '\n' || c == '\r') {
 				asRelativePath(curfilename,extPath);
-				post("Symbol open at end of line on line %d in file '%s'\n",
-					startline+errLineOffset, extPath);
+//				post("Symbol open at end of line on line %d in file '%s'\n",
+//					startline+errLineOffset, extPath);
 				yylen = 0;
 				r = 0;
 				goto leave;
@@ -774,8 +774,8 @@ symbol3 : {
 		}
 		if (c == 0) {
 			asRelativePath(curfilename,extPath);
-			post("Open ended symbol started on line %d in file '%s'\n",
-				startline+errLineOffset, extPath);
+//			post("Open ended symbol started on line %d in file '%s'\n",
+//				startline+errLineOffset, extPath);
 			yylen = 0;
 			r = 0;
 			goto leave;
@@ -809,8 +809,8 @@ string1 : {
 		}
 		if (c == 0) {
 			asRelativePath(curfilename, extPath);
-			post("Open ended string started on line %d in file '%s'\n",
-				startline + errLineOffset, extPath);
+//			post("Open ended string started on line %d in file '%s'\n",
+//				startline + errLineOffset, extPath);
 			yylen = 0;
 			r = 0;
 			goto leave;
@@ -858,8 +858,8 @@ comment2 : {
 		yylen = 0;
 		if (c == 0) {
 			asRelativePath(curfilename, extPath);
-			post("Open ended comment started on line %d in file '%s'\n",
-				startline + errLineOffset, extPath);
+//			post("Open ended comment started on line %d in file '%s'\n",
+//				startline + errLineOffset, extPath);
 			r = 0;
 			goto leave;
 		}
@@ -872,15 +872,15 @@ error1:
 	yytext[yylen] = 0;
 
 	asRelativePath(curfilename, extPath);
-	post("illegal input string '%s' \n   at '%s' line %d char %d\n",
-		yytext, extPath, lineno+errLineOffset, charno);
-	post("code %d\n", c);
+//	post("illegal input string '%s' \n   at '%s' line %d char %d\n",
+//		yytext, extPath, lineno+errLineOffset, charno);
+//	post("code %d\n", c);
 	//postfl(" '%c' '%s'\n", c, binopchars);
 	//postfl("%d\n", strchr(binopchars, c));
 
 error2:
 	asRelativePath(curfilename, extPath);
-	post("  in file '%s' line %d char %d\n", extPath, lineno+errLineOffset, charno);
+//	post("  in file '%s' line %d char %d\n", extPath, lineno+errLineOffset, charno);
 	r = BADTOKEN;
 	goto leave;
 
@@ -888,7 +888,7 @@ leave:
 	yytext[yylen] = 0;
 
 #if DEBUGLEX
-	if (gDebugLexer) postfl("yylex: %d  '%s'\n",r,yytext);
+//	if (gDebugLexer) postfl("yylex: %d  '%s'\n",r,yytext);
 #endif
 	//if (lexCmdLine>0) postfl("yylex: %d  '%s'\n",r,yytext);
 	return r;
@@ -901,7 +901,7 @@ int processbinop(char *token)
 	PyrSlotNode *node;
 
 #if DEBUGLEX
-	if (gDebugLexer) postfl("processbinop: '%s'\n",token);
+//	if (gDebugLexer) postfl("processbinop: '%s'\n",token);
 #endif
 	sym = getsym(token);
 	SetSymbol(&slot, sym);
@@ -1239,8 +1239,8 @@ void yyerror(const char *s)
 {
 	parseFailed = 1;
 	yytext[yylen] = 0;
-	error("%s\n",s);
-	postErrorLine(lineno, linepos, charno);
+//	error("%s\n",s);
+//	postErrorLine(lineno, linepos, charno);
 	//Debugger();
 }
 
@@ -1248,8 +1248,8 @@ void fatal()
 {
 	parseFailed = 1;
 	yytext[yylen] = 0;
-	error("Parse error\n");
-	postErrorLine(lineno, linepos, charno);
+//	error("Parse error\n");
+//	postErrorLine(lineno, linepos, charno);
 	//Debugger();
 }
 
@@ -1281,7 +1281,7 @@ void postErrorLine()
 
 void postErrorLine(int linenum, int start, int charpos)
 {
-	int i, j, end, pos;
+	/*int i, j, end, pos;
 	char str[256];
 
 	//post("start %d\n", start);
@@ -1319,7 +1319,7 @@ void postErrorLine(int linenum, int start, int charpos)
 		str[j] = 0;
 		post("  %s\n", str);
 	}
-	post("-----------------------------------\n", str);
+	post("-----------------------------------\n", str);*/
 }
 
 /*
@@ -1416,12 +1416,12 @@ start:
 		if (!emptyls(&brackets)) {
 			if ((d = popls(&brackets)) != OPENSQUAR) {
 				fatal();
-				post("opening bracket was a '%c', but found a '%c'\n",d,c);
+//				post("opening bracket was a '%c', but found a '%c'\n",d,c);
 				goto error1;
 			}
 		} else {
 			fatal();
-			post("unmatched '%c'\n",c);
+//			post("unmatched '%c'\n",c);
 			goto error1;
 		}
 		r = c;
@@ -1432,12 +1432,12 @@ start:
 		if (!emptyls(&brackets)) {
 			if ((d = popls(&brackets)) != (intptr_t) OPENPAREN) {
 				fatal();
-				post("opening bracket was a '%c', but found a '%c'\n",d,c);
+//				post("opening bracket was a '%c', but found a '%c'\n",d,c);
 				goto error1;
 			}
 		} else {
 			fatal();
-			post("unmatched '%c'\n",c);
+//			post("unmatched '%c'\n",c);
 			goto error1;
 		}
 		if (brackets.num < startLevel) goto leave;
@@ -1447,12 +1447,12 @@ start:
 		if (!emptyls(&brackets)) {
 			if ((d = popls(&brackets)) != OPENCURLY) {
 				fatal();
-				post("opening bracket was a '%c', but found a '%c'\n",d,c);
+//				post("opening bracket was a '%c', but found a '%c'\n",d,c);
 				goto error1;
 			}
 		} else {
 			fatal();
-			post("unmatched '%c'\n",c);
+//			post("unmatched '%c'\n",c);
 			goto error1;
 		}
 		if (brackets.num < startLevel) goto leave;
@@ -1474,8 +1474,8 @@ symbol3 : {
 		if (c == 0) {
 			char extPath[MAXPATHLEN];
 			asRelativePath(curfilename, extPath);
-			post("Open ended symbol started on line %d in file '%s'\n",
-				 startline, extPath);
+//			post("Open ended symbol started on line %d in file '%s'\n",
+//				 startline, extPath);
 			goto error2;
 		}
 		goto start;
@@ -1495,8 +1495,8 @@ string1 : {
 		if (c == 0) {
 			char extPath[MAXPATHLEN];
 			asRelativePath(curfilename, extPath);
-			post("Open ended string started on line %d in file '%s'\n",
-				 startline, extPath);
+//			post("Open ended string started on line %d in file '%s'\n",
+//				 startline, extPath);
 			goto error2;
 		}
 		goto start;
@@ -1529,8 +1529,8 @@ comment2 : {
 		if (c == 0) {
 			char extPath[MAXPATHLEN];
 			asRelativePath(curfilename, extPath);
-			post("Open ended comment started on line %d in file '%s'\n",
-				 startline, extPath);
+//			post("Open ended comment started on line %d in file '%s'\n",
+//				 startline, extPath);
 			goto error2;
 		}
 		goto start;
@@ -1539,7 +1539,7 @@ comment2 : {
 error1:
 	char extPath[MAXPATHLEN];
 	asRelativePath(curfilename, extPath);
-	post("  in file '%s' line %d char %d\n", extPath, lineno, charno);
+//	post("  in file '%s' line %d char %d\n", extPath, lineno, charno);
 	res = false;
 	goto leave;
 
@@ -1834,13 +1834,13 @@ bool parseOneClass(PyrSymbol *fileSym)
 					classdep = newClassDependancy(className, superClassName, fileSym, startPos, textpos, startLineOffset);
 				} else {
 					compileErrors++;
-					postfl("Expected %c.  got token: '%s' %d\n", OPENCURLY, yytext, token);
+					//postfl("Expected %c.  got token: '%s' %d\n", OPENCURLY, yytext, token);
 					postErrorLine(lineno, linepos, charno);
 					return false;
 				}
 			} else {
 				compileErrors++;
-				post("Expected superclass name.  got token: '%s' %d\n", yytext, token);
+				//post("Expected superclass name.  got token: '%s' %d\n", yytext, token);
 				postErrorLine(lineno, linepos, charno);
 				return false;
 			}
@@ -1851,7 +1851,7 @@ bool parseOneClass(PyrSymbol *fileSym)
 			classdep = newClassDependancy(className, superClassName, fileSym, startPos, textpos, startLineOffset);
 		} else {
 			compileErrors++;
-			post("Expected ':' or %c.  got token: '%s' %d\n", OPENCURLY, yytext, token);
+			//post("Expected ':' or %c.  got token: '%s' %d\n", OPENCURLY, yytext, token);
 			postErrorLine(lineno, linepos, charno);
 			return false;
 		}
@@ -1865,7 +1865,7 @@ bool parseOneClass(PyrSymbol *fileSym)
 	} else {
 		if (token != 0) {
 			compileErrors++;
-			post("Expected class name.  got token: '%s' %d\n", yytext, token);
+			//post("Expected class name.  got token: '%s' %d\n", yytext, token);
 			postErrorLine(lineno, linepos, charno);
 			return false;
 		} else {
@@ -2200,7 +2200,7 @@ SCLANG_DLLEXPORT_C void runLibrary(PyrSymbol* selector)
 		} else {
 			post("caught exception in runLibrary\n");
 		}
-		error(ex.what());
+		//error(ex.what());
 	} catch (...) {
 		postfl("DANGER: OUT of MEMORY. Operation failed.\n");
 	}
