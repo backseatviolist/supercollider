@@ -1,8 +1,13 @@
+/*
+
+The classes and methods in this file are NOT a public API and are subject to change!
+
+*/
+
 UGenRegressionTest {
 
     // Run a SynthDef, record its output to a file in NRT mode, and then write to file.
     // Duration is in samples, not seconds, so it has no dependency on options.
-    // Argument order beyond ugenGraphFunc is subject to change! Use keyword arguments.
     *recordSynthDefNRT { |ugenGraphFunc, options, duration = 100, outFile, action|
         var synthDefName, scoreFile;
         var score;
@@ -43,7 +48,6 @@ UGenRegressionTest {
         );
     }
 
-    // Argument order beyond ugenGraphFunc is subject to change! Use keyword arguments.
     *loadToFloatArrayNRT { |ugenGraphFunc, options, duration = 100, action|
         var outFile;
         outFile = Platform.defaultTempDir +/+ "SuperCollider_UGenRegressionTest_output.aiff";
@@ -79,6 +83,11 @@ UGenRegressionTest {
     *generateTestCode { |functionCode, options, action|
         var ugenGraphFunc;
         ugenGraphFunc = functionCode.interpret;
+        options = options ?? {
+            ServerOptions()
+                .sampleRate_(48000)
+                .numOutputBusChannels_(1);
+        };
         this.loadToFloatArrayNRT(
             ugenGraphFunc: ugenGraphFunc,
             options: options,
