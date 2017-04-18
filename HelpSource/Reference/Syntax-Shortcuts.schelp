@@ -36,115 +36,276 @@ collect((1..10), _.squared ); // function call syntax
 
 You could even start expanding out the equivalent of (1..10) which is really a shortcut for code:: series(1, nil, 10) ::. This could also be written code:: 1.series(nil,10) ::. This adds another 26 variations to the 13 variations above.
 
-section:: Objects, functions, messages and arguments
+section:: Message shortcuts
 
-subsection:: functional and receiver notation
-table::
-## instead of writing: || you can write:
-## code:: f(x, y) :: || code:: x.f(y) ::
-## code:: f(g(x)) :: || code:: x.g.f ::
+Since the SuperCollider language is mostly about sending messages to things, many syntax shortcuts in SuperCollider are abbreviations to the message syntax.
+
+subsection:: Functional and receiver notation
+
+An identifier is a lowercase letter followed by any number of alphanumeric characters and underscores. If a method selector is a valid identifier, the following are equivalent ways to send the message code::bar:: to the receiver code::foo:: with arguments code::arg1::, code::arg2::, and code::arg3:: :
+
+code::
+bar(foo, arg1, arg2, arg3) // functional notation
+foo.bar(arg1, arg2, arg3) // receiver notation
 ::
 
-subsection:: defining instance variable accessor methods
-table::
-## instead of writing: || you can write:
-## code::
-Thing { var x;
-    x { ^x }
-    x_ { arg z; x = z; }
-}
-:: || code:: Thing { var <>x; } ::
+If you are sending a message with no arguments, the parentheses can be left out. These are equivalent:
+
+code::
+foo.bar()
+foo.bar
 ::
 
-subsection:: calling an instance variable setter method
-table::
-## instead of writing: || you can write:
-## code:: p.x_(y) :: || code:: p.x = y :: or code:: x(p) = y ::
+It is idiomatic to "chain" messages using receiver notation, e.g. code::[1, 2, 3].reverse.normalize.pyramid(4).mirror::.
+
+subsection:: Calling the "value" method
+
+In receiver notation, the selector "value" has a special shortcut:
+
+code::
+foo.value(bar, baz)
+foo.(bar, baz)
 ::
 
-subsection:: use a selector as binary operator
-table::
-## instead of writing: || you can write:
-## code:: min(x, y) :: || code:: x min: y ::
+No, you can't omit the parentheses in code::foo.()::.
+
+subsection:: Calling the "new" method on classes
+
+When invoking a class by name, the "new" class method has a special shortcut:
+
+code::
+Point.new(3, 4)
+Point(3, 4)
 ::
 
-subsection:: instantiate object
-table::
-## instead of writing: || you can write:
-## code:: Point.new(3, 4); :: || code:: Point(3, 4) ::
+subsection:: Setter methods
+
+Method names that end in an underscore code::_:: are idiomatically understood as setters. There are two special syntaxes when calling a setter with a single argument:
+
+code::
+foo.bar_(baz)
+foo.bar = baz
+bar(foo) = baz  // rare, not recommended
 ::
 
-subsection:: moving blocks out of argument lists
-table::
-## instead of writing: || you can write:
-## code:: if (x<3, {\abc}, {\def}); :: || code:: if (x<3) {\abc} {\def} ::
-## code:: z.do({|x| x.play }); :: || code:: z.do {|x| x.play }; ::
-## code:: while({ a < b },{ a = a * 2 }); :: || code:: while { a < b } { a = a * 2 }; ::
+Although these special notations look like the assignment syntax, they are actually messages.
+
+subsection:: Calling the "performList" method
+
+If you add an asterisk before the last argument in functional or receiver notation, it serves as a shortcut for link::Classes/Object#-performList:: :
+
+code::
+foo.performList(\bar, baz, quux, array)
+foo.bar(baz, quux, *array)
 ::
 
-subsection:: shorter argument lists
-table::
-## instead of writing: || you can write:
-## code:: { arg x; x < 2 } :: || code:: {|x| x < 2 } ::
-## code:: { arg x = 123; x < 2 } :: || code:: {|x = 123| x < 2 } ::
-## code:: { arg x = 10.rand; x < 2 } :: || code:: {|x = (10.rand)| x < 2 } :: or code:: {|x(10.rand)| x < 2 } ::
-::
-note::
-When using the new code::||:: syntax, the default value needs to be enclosed in parenthesis if it's not a literal.
+subsection:: Function argument shortcuts
+
+Both functional and receiver notations have some shortcuts available when all arguments are functions written using the code::{ curly brace }:: notation.
+
+In receiver notation, if all arguments are curly-brace functions, the parentheses and separating commas can be removed:
+
+code::
+(x < 3).if({ \abc }, { \def });
+(x < 3).if { \abc } { \def };
+
+Routine.run({ 4.wait });
+Routine.run { 4.wait };
 ::
 
-subsection:: calling the 'value' method
-table::
-## instead of writing: || you can write:
-## code:: f.value(x) :: || code:: f.(x) ::
+In functional notation, if all arguments are curly-brace functions, they can be moved out of the parentheses and the separating commas can be removed:
+
+code::
+if(x < 3, { \abc }, { \def });
+if(x < 3) { \abc } { \def };
 ::
 
-subsection:: calling performList
-table::
-## instead of writing: || you can write:
-## code:: object.performList(\method, a, b, array) :: || code:: object.method(a, b, *array) ::
+If the receiver is also a curly-brace function, the parentheses can be removed entirely:
+
+code::
+while({ a < b }, { a = a * 2 });
+while { a < b } { a = a * 2 };
 ::
 
-subsection:: partial application
-table::
-## instead of writing: || you can write:
-## code:: {|x| object.msg(a, x, b) } :: || code:: object.msg(a, _, b) ::
-## code:: {|x,y| object.msg(a, x, y) } :: || code:: object.msg(a, _, _) ::
-## code:: {|x| a + x } :: || code:: a + _ ::
-## code:: {|x| [a, b, x] } :: || code:: [a, b, _] ::
-## code:: {|x| (a: x) } :: || code:: (a: _) ::
+Note that the argument list in "open" functional notation has higher precedence than receiver notation:
+
+code::
+if(1 == 2) { \foo } { \bar } .asString.size;
+(if(1 == 2) { \foo } { \bar }).asString.size;
+
+// NOT equivalent to this:
+if(1 == 2, { \foo }, { \bar }.asString.size);
 ::
 
+subsection:: Binary operator notation
+
+A selector is a valid binary operator if it consists of one or more characters in the set code::!@%&*-+=|<>?/::. It can't contain the illegal combinations code::/* */ //::, and can't be the string "=" to avoid confusion with the assignment syntax.
+
+If a message has a binary operator for a selector and has exactly one argument, it can be written as an infix between the receiver and the argument. The following are equivalent:
+
+code::
+a -=<>=- b
+a.perform('-=<>=-', b)
+::
+
+You are using this syntax when you use arithmetic infix operators like code::2 + 3::. Unlike other languages, the arithmetic operators don't get any special treatment by the parser. With this background, the absence of operator precedence in SC makes a lot of sense.
+
+Binary operator notation and its variants described in the next sections do not interact with the various shortcuts for functional and receiver notation.
+
+subsection:: Key binary operator notation
+
+Selectors that are valid identifiers can be written in "key binary operator" notation if the message in question has exactly one argument. The following are equivalent:
+
+code::
+a foo: b
+a.perform('foo', b)
+::
+
+subsection:: Adverb notation
+
+Adverb notation allows adding a second argument, a symbol or integer, to binary operator notation.
+
+code::
+// The adverb can be a valid identifier, in which case it becomes a Symbol in the second argument.
+a +.foo b
+a.perform('+', b, \foo)
+
+// Alternatively, it can be an integer literal which becomes an Integer.
+a +.3 b
+a.perform('+', b, 3)
+
+// Adverbs also work with key binary operators.
+a foo:.bar b
+a.perform('foo', b, 'bar')
+::
+
+The actual uses for adverbs are described in link::Reference/Adverbs:: and link::Guides/J-concepts-in-SC::. They are a very rarely used feature of SC.
+
+section:: Functions and classes
+
+subsection:: Shorter argument lists
+
+In code::{ curly brace }:: function notation, arguments can be written using a Ruby-style shortcut:
+
+code::
+{ arg x, y; x < y }
+{ |x, y| x < y }
+::
+
+The comma between arguments in the list is optional:
+
+code::{ |x y| x < y }::
+
+Default arguments are wrapped in parentheses, and are optionally prefaced with code::=:::
+
+code::
+{ arg x = 10.rand; x < 2 }
+{ |x = (10.rand)| x < 2 }
+{ |x(10.rand)| x < 2 }
+::
+
+If the default argument is a literal, the parentheses can be omitted:
+
+code::
+{ arg x = 10; x < 2 }
+{ |x = 10| x < 2 }
+{ |x 10| x < 2 }  // not recommended
+::
+
+subsection:: Instance and class variable accessor methods
+
+When defining an instance variable or class variable, there are shortcuts for easily creating getter and setter methods.
+
+code::
+// Getter
+Thing { var x; x { ^x } }
+Thing { var <x; }
+
+// Setter
+Thing { var x; x_ { arg z; x = z; } }
+Thing { var >x; }
+
+// Both
+Thing { var x; x { ^x } x_ { arg z; x = z; } }
+Thing { var <>x; }
+
+// Also works for class variables
+Thing { classvar x; *x { ^x } *x_ { arg z; x = z; } }
+Thing { classvar <>x; }
+::
+
+These automatically defined methods are not special, and behave just as if you defined them manually. They interact with inheritance as expected, and will generate errors if the method names conflict with others.
+
+subsection:: Partial application
+
+Partial application notation is a quick way to wrap method calls and related operations in functions.
+
+In any method call syntax, a slot for a receiver or argument where a variable could normally go may be replaced with code::_::. Instead of executing the method call, this returns a function that substitutes code::_:: for the argument(s) passed in:
+
+code::
+{ |x| x.foo(bar, baz) }
+_.foo(bar, baz)
+
+{ |x, y| foo.bar(baz, x, y) }
+foo.bar(baz, _, _)
+
+{ |x, y| x + y }
+_ + _
+::
+
+Partial application works for all shortcut syntaxes that decompose into method calls. All the following are legal:
+
+code::
+[a, b, _, _]
+(a: _, b: _)
+Point(*_)
+_[3] = 4  // Not recommended -- this looks like an assignment, but evaluates to a function!
+::
+
+Partial application cannot be used outside of a method call. The expression "code::_::" alone will return a syntax error.
+
+warning::
+It is easy to run into the limitations of partial application when using chained method calls. For example, code::_.squared.sqrt:: fails because it is trying to take the square root of a function. The takeaway is to only use code::_:: in the simplest cases.
+::
 
 section:: Collections
 
-subsection:: create a collection
-table::
-## instead of writing: || you can write:
-## code:: Set.new.add(3).add(4).add(5); :: || code:: Set[3, 4, 5] ::
-## code:: Array[3, 4, 5]; :: || code:: [3, 4, 5] ::
+subsection:: Create a collection
+
+A simple collection construction syntax is equivalent to calling code::new:: on a class and repeatedly calling code::add:: on the result:
+
+code::
+Set[3, 4, 5]
+Set.new.add(3).add(4).add(5)
 ::
 
-subsection:: indexing elements
+If the class in question is code::Array::, it can be omitted:
+
+code::
+Array[3, 4, 5]
+[3, 4, 5]
+::
+
+subsection:: Indexing elements
 table::
 ## instead of writing: || you can write:
 ## code:: z.at(i) :: || code:: z[i] ::
 ## code:: z.put(i, y); :: || code:: z[i] = y; ::
 ::
 
-subsection:: creating Events
+subsection:: Creating Events
 table::
 ## instead of writing: || you can write:
 ## code:: Event[\a -> 1, \b -> 2] :: || code:: (a: 1, b: 2) ::
 ::
 
-subsection:: creating Arrays with key-value pairs
+subsection:: Creating Arrays with key-value pairs
 table::
 ## instead of writing: || you can write:
 ## code:: [\a, 1, \b, 2] :: || code:: [a: 1, b: 2] ::
 ::
 
-subsection:: creating arithmetic series
+subsection:: Creating arithmetic series
 table::
 ## instead of writing: || you can write:
 ## code:: Array.series(16,1,1) :: or code:: series(1,nil,16) :: || code:: (1..16) ::
@@ -156,7 +317,7 @@ table::
 ## code:: seriesIter(1,3,11) :: || code:: (:1,3..11) ::
 ::
 
-subsection:: accessing subranges of Arrays
+subsection:: Accessing subranges of Arrays
 table::
 ## instead of writing: || you can write:
 ## code:: a.copyRange(4,8) :: || code:: a[4..8] ::
@@ -166,26 +327,26 @@ table::
 
 section:: Other shortcuts
 
-subsection:: multiple assignment
+subsection:: Multiple assignment
 table::
 ## instead of writing: || you can write:
 ## code:: x = z.at(0); y = z.at(1); :: || code:: # x, y = z; ::
 ::
 
-subsection:: accessing environment variables
+subsection:: Accessing environment variables
 table::
 ## instead of writing: || you can write:
 ## code:: 'myName'.envirGet :: || code:: ~myName ::
 ## code:: 'myName'.envirSet(9); :: || code:: ~myName = 9; ::
 ::
 
-subsection:: shorthand for Symbols
+subsection:: Shorthand for Symbols
 table::
 ## instead of writing: || you can write:
 ## code:: 'mySymbol' :: || code:: \mySymbol ::
 ::
 
-subsection:: creating a Ref
+subsection:: Creating a Ref
 table::
 ## instead of writing: || you can write:
 ## code:: Ref.new(thing) :: || code:: `thing ::
