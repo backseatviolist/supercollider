@@ -86,7 +86,7 @@ x = {
 	onsets = Onsets.kr(chain, MouseX.kr(0,1), \rcomplex);
 
 	// You'll hear percussive "ticks" whenever an onset is detected
-	pips = WhiteNoise.ar(EnvGen.kr(Env.perc(0.001, 0.1, 0.2), onsets));
+	pips = WhiteNoise.ar(Env.perc(0.001, 0.1, 0.2).kr(onsets));
 	Pan2.ar(sig, -0.75, 0.2) + Pan2.ar(pips, 0.75, 1)
 }.play;
 )
@@ -114,7 +114,7 @@ x = {
 	onsets = Onsets.kr(chain, threshes, \rcomplex);
 
 	// Generate pips at a variety of pitches
-	pips = SinOsc.ar((threshes).linexp(0, 1, 440, 3520), 0, EnvGen.kr(Env.perc(0.001, 0.1, 0.5), onsets)).mean;
+	pips = SinOsc.ar((threshes).linexp(0, 1, 440, 3520), 0, Env.perc(0.001, 0.1, 0.5).kr(onsets)).mean;
 	Pan2.ar(sig, -0.75, 0.2) + Pan2.ar(pips, 0.75, 1)
 }.play;
 )
