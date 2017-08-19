@@ -285,7 +285,7 @@ SynthDef("sik-goo", { |out, freq = 440, formfreq = 100, gate = 0.0, bwfreq = 800
 		formfreq,
 		bwfreq
 	);
-	x = EnvGen.kr(Env.adsr, gate, Latch.kr(gate, gate)) * x;
+	x = Env.adsr.kr(gate: gate, levelScale: gate) * x;
 	Out.ar(out, x);
 }).add;
 )
@@ -397,9 +397,9 @@ SynthDef("funk",{ | out, freq = 700, amp = 0.2, gate = 1, cutoff = 20000, rez = 
 			Mix.arFill(2, {Saw.ar(freq *2 + 0.2.rand2, amp)}),
 			Mix.arFill(2, {Saw.ar(freq *4+ 0.2.rand2, amp)})
 		]),
-		EnvGen.kr(env,gate)*filterfreq,
+		env.kr(gate: gate)*filterfreq,
 		rez);
-	Out.ar(out, x * EnvGen.kr(e, gate, doneAction: Done.freeSelf))
+	Out.ar(out, x * e.kr(Done.freeSelf, gate))
 }).add;
 
 SynthDef("strings", { |out, freq = 700, amp = 0.2, gate = 1|
@@ -410,7 +410,7 @@ SynthDef("strings", { |out, freq = 700, amp = 0.2, gate = 1|
 			Mix.arFill(2, {Saw.ar(freq *0.5 + 2.rand2,0.6)})
 		]),
 		6000,1);
-	Out.ar(out, x * EnvGen.kr(enve, gate, doneAction: Done.freeSelf))
+	Out.ar(out, x * enve.kr(Done.freeSelf, gate))
 }).add;
 )
 

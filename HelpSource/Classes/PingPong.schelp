@@ -76,7 +76,7 @@ SynthDef("help-PingPong", { |out = 0, bufnum = 0|
 0.2));
 
 	Out.ar(out,
-		PingPong.ar(bufnum, [left, right] *  EnvGen.kr(Env([1, 1, 0], [2, 0.1])),
+		PingPong.ar(bufnum, [left, right] *  Env([1, 1, 0], [2, 0.1]).kr,
 			0.1, 0.8, 1)
 	)
 }).play(s, [\out, 0, \bufnum, b.bufnum]);
