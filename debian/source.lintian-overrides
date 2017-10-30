@@ -1,0 +1,3 @@
+# bundled portaudio comes with some ancient config files; they're not used in supercollider build though
+supercollider source: ancient-autotools-helper-file external_libraries/portaudio_sc_org/bindings/cpp/build/gnu/config.*
+

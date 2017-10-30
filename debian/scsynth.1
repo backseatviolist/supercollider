@@ -1,0 +1,135 @@
+.\"                                      Hey, EMACS: -*- nroff -*-
+.\" First parameter, NAME, should be all caps
+.\" Second parameter, SECTION, should be 1-8, maybe w/ subsection
+.\" other parameters are allowed: see man(7), man(1)
+.TH SCSYNTH 1 "Nov 18, 2008"
+.\" Please adjust this date whenever revising the manpage.
+.\"
+.\" Some roff macros, for reference:
+.\" .nh        disable hyphenation
+.\" .hy        enable hyphenation
+.\" .ad l      left justify
+.\" .ad b      justify to both left and right margins
+.\" .nf        disable filling
+.\" .fi        enable filling
+.\" .br        insert line break
+.\" .sp <n>    insert n+1 empty lines
+.\" for manpage-specific macros, see man(7)
+.SH NAME
+scsynth \- SuperCollider audio synthesis server
+.SH SYNOPSIS
+.B scsynth
+.RI [ options ]
+.SH DESCRIPTION
+\fBSuperCollider\fP is a real time audio synthesis programming
+language.  
+This manual page documents briefly the
+.B scsynth
+command, the audio server of SuperCollider.
+
+SuperCollider has documentation in the HTML format available in the
+\fIsupercollider\-doc\fP package.
+.PP
+.\" TeX users may be more comfortable with the \fB<whatever>\fP and
+.\" \fI<whatever>\fP escape sequences to invode bold face and italics, 
+.\" respectively.
+.SH OPTIONS
+A summary of options is included below. There \fBmust\fP be a \-u and/or a \-t
+option, or \-N for nonrealtime.
+.TP
+.B \-u <udp\-port\-number>    
+a port number (0\(hy65535)
+.TP
+.B \-t <tcp-port-number>    
+a port number (0\(hy65535)
+.TP
+.B \-c <number\-of\-control\-bus\-channels> 
+default 4096
+.TP
+.B \-a <number\-of\-audio\-bus\-channels> 
+default 128
+.TP
+.B \-i <number\-of\-input\-bus\-channels>  
+default 2
+.TP
+.B \-o <number\-of\-output\-bus\-channels>
+default 2
+.TP
+.B \-z <block\-size>                     
+default 64
+.TP
+.B \-Z <hardware\-buffer\-size>           
+default 0
+.TP
+.B \-S <hardware\-sample\-rate>           
+default 0
+.TP
+.B \-b <number\-of\-sample\-buffers>       
+default 1024
+.TP
+.B \-n <max\-number\-of\-nodes>
+default 1024
+.TP
+.B \-d <max\-number\-of\-synth\-defs>
+default 1024
+.TP
+.B \-m <real\-time\-memory\-size>
+default 8192
+.TP
+.B \-w <number\-of\-wire\-buffers>
+default 64
+.TP
+.B \-r <number\-of\-random\-seeds>
+default 64
+.TP
+.B \-D <load synthdefs? 1 or 0>
+default 1
+.TP
+.B \-R <publish to Rendezvous? 1 or 0>
+default 1
+.TP
+.B \-l <max\-logins>                     
+default 64
+.br
+maximum number of named return addresses stored
+.br
+also maximum number of tcp connections accepted
+.TP
+.B \-p <session\-password>
+When using TCP, the session password must be the first command sent.
+The default is no password.  UDP ports never require passwords, so
+for security use TCP.
+.TP
+.B \-N <cmd\-filename> <input\-filename> <output\-filename> <sample\-rate> <header\-format> <sample\-format>
+.TP
+.B \-L
+enable memory locking
+.TP
+.B \-H <hardware\-device\-name>
+.TP
+.B \-v <verbosity>
+0 is normal behaviour
+.br
+\-1 suppresses informational messages
+.br
+\-2 suppresses informational and many error messages
+.TP
+.B \-U <ugen\-plugins\-path>
+a colon\-separated list of paths
+.br
+If \-U is specified, the standard paths are NOT searched for plugins.
+.TP
+.B \-P <restricted\-path>
+If specified, prevents file\-accessing OSC commands from accessing files outside <restricted\-path>.
+.SH TO QUIT
+To quit, send a 'quit' command via UDP or TCP, or press ctrl\-C.
+.SH SEE ALSO
+.BR sclang (1),
+.br
+.I /usr/share/doc/supercollider\-server
+.br
+.SH AUTHOR
+This manual page was written by Paul Brossier <piem@altern.org>
+for the Debian project (but may be used by others).
+
+Modified and updated by Artem Popov <artfwo@gmail.com>.

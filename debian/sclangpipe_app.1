@@ -1,0 +1,42 @@
+.\"                                      Hey, EMACS: -*- nroff -*-
+.\" First parameter, NAME, should be all caps
+.\" Second parameter, SECTION, should be 1-8, maybe w/ subsection
+.\" other parameters are allowed: see man(7), man(1)
+.TH SCVIM 1 "Nov 18, 2008"
+.\" Please adjust this date whenever revising the manpage.
+.\"
+.\" Some roff macros, for reference:
+.\" .nh        disable hyphenation
+.\" .hy        enable hyphenation
+.\" .ad l      left justify
+.\" .ad b      justify to both left and right margins
+.\" .nf        disable filling
+.\" .fi        enable filling
+.\" .br        insert line break
+.\" .sp <n>    insert n+1 empty lines
+.\" for manpage-specific macros, see man(7)
+.SH NAME
+sclangpipe_app \- a wrapper to invoke sclang for scvim
+.SH SYNOPSIS
+.B sclangpipe_app
+.RI [ options ]
+.SH DESCRIPTION
+This manual page documents briefly the
+.B sclangpipe_app
+command.
+.PP
+.\" TeX users may be more comfortable with the \fB<whatever>\fP and
+.\" \fI<whatever>\fP escape sequences to invode bold face and italics, 
+.\" respectively.
+\fBsclangpipe_app\fP is a script that invokes the supercollider language (sclang)
+executable for use with scvim. Users do NOT normally need to invoke it, since it
+is called by the main \fBscvim\fP plugin when invoked by vim.
+.SH SEE ALSO
+.BR scvim (1)
+.br
+.I /usr/share/doc/supercollider\-vim/README.scvim
+.SH AUTHOR
+scvim was written by Alex Norman <alex at x37v dot info>.
+.PP
+This manual page was written by Dan Stowell <danstowell@users.sourceforge.net>,
+for the Ubuntu project (but may be used by others).

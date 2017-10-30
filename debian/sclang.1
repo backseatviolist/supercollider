@@ -1,0 +1,73 @@
+.\"                                      Hey, EMACS: -*- nroff -*-
+.\" First parameter, NAME, should be all caps
+.\" Second parameter, SECTION, should be 1-8, maybe w/ subsection
+.\" other parameters are allowed: see man(7), man(1)
+.TH SCLANG 1 "Nov 18, 2008"
+.\" Please adjust this date whenever revising the manpage.
+.\"
+.\" Some roff macros, for reference:
+.\" .nh        disable hyphenation
+.\" .hy        enable hyphenation
+.\" .ad l      left justify
+.\" .ad b      justify to both left and right margins
+.\" .nf        disable filling
+.\" .fi        enable filling
+.\" .br        insert line break
+.\" .sp <n>    insert n+1 empty lines
+.\" for manpage-specific macros, see man(7)
+.SH NAME
+sclang \- a real time audio synthesis programming language 
+.SH SYNOPSIS
+.B sclang
+.RI [ options ]
+.SH DESCRIPTION
+\fBSuperCollider\fP is a real time audio synthesis programming
+language.  \fBsclang\fP is a client for the \fBscsynth\fP(1)
+server. It connects to scsynth, interprets your sclang commands,
+and sends OSC message to scsynth.
+
+SuperCollider has documentation in the HTML format available in the
+\fIsupercollider\-doc\fP package.
+.\" TeX users may be more comfortable with the \fB<whatever>\fP and
+.\" \fI<whatever>\fP escape sequences to invode bold face and italics, 
+.\" respectively.
+.SH OPTIONS
+A summary of options is included below.
+.TP
+.B \-d <path>
+Set runtime directory
+.TP
+.B \-D
+Enter daemon mode (no input)
+.TP
+.B \-g  <memory\-growth>[ k | m ]
+Set heap growth (default 256k)
+.TP
+.B \-h
+Show summary of options
+.TP
+.B \-l <path>
+Set library configuration file
+.TP
+.B \-m  <memory\-space>[ k | m ]
+Set initial heap size (default 2m)
+.TP
+.B \-r 
+Call Main.run on startup
+.TP
+.B \-s
+Call Main.stop on shutdown
+.TP
+.B \-u <network\-port\-number>
+Set UDP listening port (default 57120)
+
+.SH SEE ALSO
+.BR scsynth (1)
+.br
+.I /usr/share/doc/supercollider
+.br
+.SH AUTHOR
+This manual page was written by Paul Brossier <piem@altern.org>
+for the Debian project (but may be used by others).
+
+Modified and updated by Artem Popov <artfwo@gmail.com>.

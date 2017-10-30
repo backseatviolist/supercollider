@@ -1,0 +1,693 @@
+supercollider (1:3.9.0~rc1) unstable; urgency=medium
+
+  * New upstream version 3.9.0
+
+ -- Nathan Ho <nathan@snappizz.com>  Wed, 27 Dec 2017 15:33:59 -0800
+
+supercollider (1:3.8.0~repack-1) unstable; urgency=medium
+
+  [ Dan Stowell ]
+  * New upstream version 3.8.0
+  * Drop upstreamed patches, refresh the others
+  * Update path for lintian override
+  * Refresh patches
+  * Explicitly set to standard build type.
+    This prevents a debug build occurring due to mis-set cmake flag
+
+  [ Felipe Sateler ]
+  * Remove more patches applied upstream
+  * Have uscan repack the upstream tarball for us
+  * Fix excluded files pattern.
+    - portaudio changed name,
+    - dirs should not end with /
+  * Fix stale entries in d/copyright.
+    Some files were moved around, others were removed
+  * Forward two patches upstream and mark them as such
+
+ -- Felipe Sateler <fsateler@debian.org>  Fri, 06 Oct 2017 10:16:56 -0300
+
+supercollider (1:3.7.0~repack-5) unstable; urgency=medium
+
+  [ Felipe Sateler ]
+  * Fix FTBFS with gcc 7.
+    Thanks to Adrian Bunk for the patches. (Closes: #853671)
+  * Remove copyright_hints.
+    We no longer use CDBS
+  * Bump standards version
+
+ -- Felipe Sateler <fsateler@debian.org>  Thu, 07 Sep 2017 19:52:02 -0300
+
+supercollider (1:3.7.0~repack-4) unstable; urgency=medium
+
+  [ Dan Stowell ]
+  * Add notes about forwarded patches
+
+  [ Felipe Sateler ]
+  * Use gbp-pq for patches
+  * Add patch to fix build failure when gcc doesn't handle 128bit float types
+  * Bump debhelper compat level to 10
+  * Switch from CDBS to short-form dh
+  * Enable hardening flags
+  * Drop unused lintian overrides
+
+ -- Felipe Sateler <fsateler@debian.org>  Wed, 16 Nov 2016 20:27:41 -0300
+
+supercollider (1:3.7.0~repack-3) unstable; urgency=medium
+
+  * Team upload.
+  * Add patch to fix oscpack FTBFS. (Closes: #824581)
+  * Add epoch to supercollider-common Breaks + Replaces. (Closes: #824757)
+
+ -- James Cowgill <jcowgill@debian.org>  Tue, 24 May 2016 18:09:01 +0100
+
+supercollider (1:3.7.0~repack-2) unstable; urgency=medium
+
+  [ Fernando Seiti Furusato ]
+  * debian/rules: disabled altivec/vsx for ppc64el since the package does not
+    support the usage for now
+
+  [ Dan Stowell ]
+  * Update copyright file headers
+  * Restrict (optional) supernova to its target archs (amd64, i386m ia64)
+    (Closes: #824581)
+  * Fix lintian warnings about license names
+
+  [ Felipe Sateler ]
+  * Make supercollider-common Breaks/Replaces supercollider-gedit
+    (Closes: #824757)
+  * Drop unused dependency on libqtwebkit-dev (Closes: #784531)
+
+ -- Felipe Sateler <fsateler@debian.org>  Thu, 19 May 2016 22:33:58 -0400
+
+supercollider (1:3.7.0~repack-1) unstable; urgency=medium
+
+  [ Dan Stowell ]
+  * Update upstream url references (github now not sourceforge)
+  * New Upstream version
+    - Closes: #822467
+    - Update dependencies for new version
+    - Remove mathjax dependency management, dropped upstream
+    - Remove boost-lockfree from copyright, dropped upstream
+    - Refresh patches, and drop outdated ones
+    - Update copyright information
+    - Add patch to fix FTBFS when using system boost
+    - Update install rules for changed readme filenames
+    - Add patch to fix FTBFS, add -fPIC flag to tlsf build
+  * Ignore lintian error about (unused) portaudio config files
+
+  [ IOhannes m zmölnig ]
+  * Use https:// in Vcs-Browser stanza
+
+  [ Hanno Zulla ]
+  * Update upstream homepage URL, fix vcs-field-uses-insecure-uri
+
+  [ Felipe Sateler ]
+  * Ship mime info in -common package, not -gedit package
+  * Bump Standards-Version to 3.9.8
+    - Drop menu files in favor of the desktop entries
+
+  [ Jonas Smedegaard ]
+  * Remove myself as uploader.
+
+ -- Felipe Sateler <fsateler@debian.org>  Mon, 09 May 2016 20:59:52 -0300
+
+supercollider (1:3.6.6~repack-2-2) unstable; urgency=medium
+
+  [ Dan Stowell ]
+  * Update debian git URLs listed in control file
+
+  [ Felipe Sateler ]
+  * Fixup watch file
+  * Backport upstream patch for gcc5 atomic fix (Closes: #795968)
+
+ -- Felipe Sateler <fsateler@debian.org>  Sat, 26 Sep 2015 17:48:35 -0300
+
+supercollider (1:3.6.6~repack-2-1) unstable; urgency=low
+
+  [ Dan Stowell ]
+  * Exclude bundled minified javascript-prettify, use packaged version.
+
+  [ Felipe Sateler ]
+  * Install prettify symlink during build, not installation time
+  * Add emacsen compat file
+
+ -- Felipe Sateler <fsateler@debian.org>  Sat, 04 Oct 2014 13:19:47 -0300
+
+supercollider (1:3.6.6~repack-1) unstable; urgency=low
+
+  * Imported upstream version 3.6.6.
+  * Exclude bundled MathJax scripts. We use system MathJax. Closes: #760981
+  * Refresh patches, dropping one superceded patch.
+
+ -- Dan Stowell <danstowell@users.sourceforge.net>  Wed, 10 Sep 2014 09:28:36 +0100
+
+supercollider (1:3.6.3~repack-7) unstable; urgency=medium
+
+  * Team upload.
+
+  [ Felipe Sateler ]
+  * Fix package dir in emacs startup file. (Closes: #743469)
+
+  [ Gabriele Giacone ]
+  * debian/control: Switch (Build-Depends) to emacs | emacsen. (Closes: #754027)
+
+ -- Sebastian Ramacher <sramacher@debian.org>  Tue, 09 Sep 2014 18:16:49 +0200
+
+supercollider (1:3.6.3~repack-6) unstable; urgency=medium
+
+  * Fix FTBFS with gcc-4.9. Closes: #746917
+
+ -- Felipe Sateler <fsateler@debian.org>  Fri, 06 Jun 2014 13:25:55 -0400
+
+supercollider (1:3.6.3~repack-5) unstable; urgency=medium
+
+  * Do not use system yaml-cpp. Closes: #733277
+
+ -- Felipe Sateler <fsateler@debian.org>  Fri, 03 Jan 2014 13:11:22 -0300
+
+supercollider (1:3.6.3~repack-4) unstable; urgency=low
+
+  [ Dan Stowell ]
+  * Use system libyaml-cpp0.3 (Closes: #722430)
+  * Do not build/provide supernova on sparc/powerpc (Closes: #728573)
+
+ -- Felipe Sateler <fsateler@debian.org>  Sun, 24 Nov 2013 12:50:24 -0300
+
+supercollider (1:3.6.3~repack-3) unstable; urgency=low
+
+  * Force use of bundled yaml-cpp
+  * Add patch to use system lockfree. Also link appropriate libs on all archs
+
+ -- Felipe Sateler <fsateler@debian.org>  Thu, 12 Sep 2013 19:21:30 -0300
+
+supercollider (1:3.6.3~repack-2) unstable; urgency=low
+
+  [ Dan Stowell ]
+  * Add 2 more files needed in -dev: SCVersion.txt, SC_PlugIn.hpp
+
+  [ Felipe Sateler ]
+  * Drop alternative build dependencies on specific libboost versions
+  * Bump standards version
+  * Upload to unstable
+
+ -- Felipe Sateler <fsateler@debian.org>  Mon, 09 Sep 2013 22:06:01 -0300
+
+supercollider (1:3.6.3~repack-1) experimental; urgency=low
+
+  [ Dan Stowell ]
+  * Imported upstream version 3.6.3
+  * Rename language package supercollider -> supercollider-language
+  * supercollider is now a metapackage to provide standard install
+
+  [ Felipe Sateler ]
+  * Improve supercollider-supernova description.
+
+ -- Felipe Sateler <fsateler@debian.org>  Mon, 11 Mar 2013 09:22:37 -0400
+
+supercollider (1:3.6.1~repack) unstable; urgency=low
+
+  * Imported upstream version 3.6.1
+  * New "supercollider-ide" package for new Qt-based IDE
+  * Ensure build with system boost, and now v1.50+ is required
+  * Update/refresh patches, remove 4 outdated patches
+  * Update copyright file
+  * Update install files: supernova plugin path changed
+  * Add cmake flags to ensure libscsynth is built (while testsuite not, unneeded)
+  * supernova compile fix on x86
+
+ -- Dan Stowell <danstowell@users.sourceforge.net>  Thu, 20 Dec 2012 19:22:39 +0000
+
+supercollider (1:3.5.4~repack-2-2) unstable; urgency=low
+
+  * Imported upstream version 3.5.4
+  * Note copyright for added file git-archive-all.py
+
+ -- Dan Stowell <danstowell@users.sourceforge.net>  Mon, 13 Aug 2012 14:07:48 +0100
+
+supercollider (1:3.5.3~repack-3) unstable; urgency=low
+
+  * Avoid FTBFS in PowerPC
+  * Avoid FTBFS in ia64
+  * Fix ARM FTBFS: more qreal->double assumptions. Closes: #682361
+
+ -- Felipe Sateler <fsateler@debian.org>  Sat, 28 Jul 2012 20:19:58 -0400
+
+supercollider (1:3.5.3~repack-2) unstable; urgency=low
+
+  [ Dan Stowell ]
+  * Fix build on ia64 - avoid invoking unneeded perf_counter.hpp
+  * Fix caps in supercollider-emacs remove script. Closes: #681187
+  * Boost-atomic build fix for PPC
+  * Note copyright for file adapted from wmctrl project
+  * Strip accidental gremlin characters that can cause problems for users in
+    some locales
+
+  [ Felipe Sateler ]
+  * Fix FTBFS in big endian architectures
+  * Fix FTBFS in arm* architectures
+
+ -- Dan Stowell <danstowell@users.sourceforge.net>  Thu, 12 Jul 2012 22:53:55 +0100
+
+supercollider (1:3.5.3~repack-1) unstable; urgency=low
+
+
+  [ Dan Stowell ]
+  * Imported upstream version 3.5.3
+   -  Removed 3 patches now upstreamed
+   - Repack upstream source without boost sources
+  * Fix build on non-x86/64: define BOOST_LOCKFREE_DCAS_ALIGNMENT
+      (Update prefix.hpp to current boost SVN 2012-07-03)
+
+  [ Jonas Smedegaard ]
+  * Unfuzz patch and refresh with shortening options.
+  * Revive copyright/license tracking silently dropped in 1:3.5.1-1.
+
+  [ Felipe Sateler ]
+  * Add missing epoch to versioned breaks/replaces. Closes: #679705
+  * Install README.extensions via debian/rules instead of a patch
+  * Add DEP3 header to update_boostlockfree_prefixhpp.patch
+  * Remove unused License paragraph
+  * Bump Standards-Version (no changes needed)
+  * Remove unused lintian override package-contains-empty-directory
+  * Update copyright hints file
+
+ -- Felipe Sateler <fsateler@debian.org>  Sat, 07 Jul 2012 14:16:59 -0400
+
+supercollider (1:3.5.2-1) unstable; urgency=low
+
+  * Imported Upstream version 3.5.2
+  * Add manpage for supernova
+  * Use system mathjax via dh_linktree
+  * Backport fix to vim plugin from upstream
+
+ -- Dan Stowell <danstowell@users.sourceforge.net>  Sat, 16 Jun 2012 10:12:09 -0400
+
+supercollider (1:3.5.1-2) UNRELEASED; urgency=low
+
+  * install supercollider mode for gedit (thanks Tim Blechmann)
+
+ -- Dan Stowell <danstowell@users.sourceforge.net>  Tue, 01 May 2012 10:11:34 +0100
+
+supercollider (1:3.5.1-1) UNRELEASED; urgency=low
+
+  [ Dan Stowell ]
+  * Imported Upstream version 3.5.1
+  * Import and adapt debian packaging info updates for SC 3.5 from tim blechmann
+  * removing scons patches (no longer using scons)
+  * Update paths & content of copyright file for SC 3.5
+
+ -- Dan Stowell <danstowell@users.sourceforge.net>  Sat, 07 Apr 2012 14:01:57 +0100
+
+supercollider (1:3.4.5-2) UNRELEASED; urgency=low
+
+  * Drop dpkg-source local-options: Defaults since dpkg-source 1.16.1.
+  * Update package relations:
+    + Relax to build-depend unversioned on debhelper: needed version
+      satisfied even in oldstable.
+  * Bump debhelper compat level to 7.
+  * Simplify install handling, as supported by debhelper compat level 7.
+  * Stop setting bogus (or obsolete?) CDBS_NO_DOC_SYMLINKING.
+  * Update copyright file:
+    + Merge Files sections with same Licensing and (subsets of) same
+      copyright holders.
+    + Extend a Files section and drop another, to sync with new upstream
+      source.
+    + Sort authors by copyright year, and then alphabetically.
+    + Add email of original author, from AUTHORS file.
+    + Strip excess whitespace, and rewrap License sections at 72 chars.
+    + Add Comment field to GNU License sections; shortened, duplicate
+      texts dropped, using FSF web address (not postal address), and
+      with license strings quoted.
+  * Replace README.source:
+    + Drop notes on no longer used quilt.
+    + Add notes on git-buildpackage and CDBS.
+  * Add myself as uploader.
+  * Consistently newline-delimit package relations.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Wed, 08 Feb 2012 00:52:02 +0100
+
+supercollider (1:3.4.5-1) unstable; urgency=low
+
+  [ Dan Stowell ]
+  * Imported Upstream version 3.4.5
+  * remove debian patches 11 & 12, upstreamed
+
+ -- Dan Stowell <danstowell@users.sourceforge.net>  Sun, 15 Jan 2012 15:48:04 +0000
+
+supercollider (1:3.4.4-3) unstable; urgency=low
+
+  * Patch from Mathieu Trudel-Lapierre to fix build under stricter linking.
+    Closes: #648782
+
+ -- Dan Stowell <danstowell@users.sourceforge.net>  Tue, 15 Nov 2011 09:54:00 +0000
+
+supercollider (1:3.4.4-2) unstable; urgency=low
+
+  * Team upload.
+  * Disable building of gedit2 plugin. Closes: #635118
+
+ -- Felipe Sateler <fsateler@debian.org>  Fri, 28 Oct 2011 23:30:39 -0300
+
+supercollider (1:3.4.4-1) unstable; urgency=low
+
+  [ Alexandre Quessy ]
+  * Initial release for debian (Closes: #602050).
+  * Little cleanup in dependencies
+  * Build-Depend on libsndfile1-dev - the 1 is mandatory
+  * Use format 3.0 (quilt)
+  * Make sure short descriptions are not duplicates
+
+  [ Felipe Sateler ]
+  * Add myself to Uploaders
+  * Use the cdbs scons class
+    - Tighten build-dep on cdbs for scons class support
+  * Add DEP-3 headers to patches
+  * Fix BSD license section in copyright file
+  * Bump Standards-Version
+  * Make use of dh_lintian instead of manually installing overrides
+  * Override lintian warnings:
+    - emacs command not in package, supercollider-emacs depends on emacs
+    - missing xpm, supercollider depends on supercollider-common
+    - empty directory, it is intentional
+  * Build-Depend on libcwiid-dev instead of dropped libcwiid1-dev
+  * Use single space after fields in debian/control
+  * Qualify build dependency on libasound for use only on linux archs
+  * Switch from pysupport to dh_python2
+
+  [ Dan Stowell ]
+  * Imported Upstream version 3.4.4
+  * Apple copyright not needed, apple files not bundled
+  * Can build against jack2 as well as jack1
+  * Update copyright to match rearranged folders and stripped linux
+    source tgz
+  * Combine -dev packages into one supercollider-dev
+    - Merged -dev package Conflicts+Replaces+Provides predecessors
+  * Handle DEB_BUILD_OPTIONS to control strip/optimise
+  * Don't strip in rules (let dh_strip decide)
+  * Update copyright with full dates+authors (largely from SCM analysis)
+
+  [ Jonas Smedegaard ]
+  * Ease building with git-buildpackage:
+    + Git-ignore quilt .pc dir.
+    + Add dpkg-source local-options hints.
+  * Update copyright file:
+    + Drop superfluous X-Packaged-By fields (covered by Files section
+    + debian/* and - for more accurate times - file debian/control).
+    + Move license texts to License sections, sorted roughly by
+      similarity with main licensing terms.
+    + Reorder Files sections sorted by amount of files, first upstream
+      and then debian packaging.
+    + Stop listing WiiMote_OSX Files section apparently no longer
+      included.
+    + Tighten DEP-5 format to draft rev. 174.
+    + Extend with additional copyright holders.
+  * Enable CDBS utils.mk snippet, for copyright-check routine.
+
+ -- Felipe Sateler <fsateler@debian.org>  Tue, 19 Jul 2011 22:18:02 -0400
+
+supercollider (1:3.3.2~svn9887-0ubuntu1~lucid1) lucid; urgency=low
+
+  * First build for Ubuntu.
+
+ -- Артём Попов <artfwo@gmail.com>  Fri, 26 Feb 2010 09:34:09 +0600
+
+supercollider (1:3.3.2~svn9887-0) UNRELEASED; urgency=low
+
+  [ Артём Попов ]
+  * New upstream release (LP: #183552). Repackaged from scratch
+    (with manpages adapted from the original package).
+
+  [ Dan Stowell]
+  * Improve behaviour of "scvim" desktop icon: visible user prompt
+    about vim-addon-manager if needed.
+  * Desktop files and icons integration.
+  * Update packaging rules for reorganised folders.
+  * Update and extend manpages for scvim.
+  * Added debian menu files.
+  * Dependencies, architeture, copyright and lintian fixes.
+
+ -- Артём Попов <artfwo@gmail.com>  Fri, 26 Feb 2010 09:34:09 +0600
+
+supercollider (20060416-1build1) gutsy; urgency=low
+
+  * Rebuild for the libflac transition.
+
+ -- Steve Kowalik <stevenk@ubuntu.com>  Tue, 10 Jul 2007 15:31:52 +1000
+
+supercollider (20060416-1) unstable; urgency=low
+
+  * New upstream release
+  * Removed erroneous architecture fields in Suggests (closes: #356372)
+  * Activated RendezVous build, added Build-depends on libavahi-client-dev
+  * Bump sonames to libsclang.so.1 and libscsynth.so.1
+  * Move supercollider-doc to Section: doc
+
+ -- Paul Brossier <piem@debian.org>  Tue, 18 Apr 2006 12:28:40 +0200
+
+supercollider (20051211-1) unstable; urgency=low
+
+  * New upstream release
+  * Prevent byte-compilation for xemacs (closes: #338169, #342358)
+  * sclang is now to be compiled only on supported platforms
+  	(closes: #276212, #290339)
+  * 10fix_emacs_help.dpatch: fix path for Help
+
+ -- Paul Brossier <piem@debian.org>  Mon, 12 Dec 2005 10:12:21 +0000
+
+supercollider (20050921-1) unstable; urgency=low
+
+  * New upstream release
+  * Removed patch 60SC_Lib_dlopen and 100fix_gcc4, merged upstream.
+  * Added 20virtual_parsenode to prevent virtual destructor g++-4.0 warnings
+  * Drop supercollider package on architectures where test failed. The
+    supercollider-server package remains available on all platforms. Also drop
+    libsclang on these machines.
+
+ -- Paul Brossier <piem@debian.org>  Thu, 22 Sep 2005 03:42:14 +0100
+
+supercollider (20050624-1) unstable; urgency=low
+
+  Paul Brossier:
+    * New upstream release
+    * Updated rules to follow the move to scons
+    * Added scons and removed emacsen first in Build-Deps
+    * Updated 10emacs, 60SC_Lib_dlopen, 70fix_some_warnings
+    * Adds 80remove_pragmas
+    * Removed 80fix_sclang.conf
+    * Bumped Standards-Version
+    * Splitted supercollider into supercollider, supercollider-server,
+      libsclang0 and libscsynth0. supercollider-dev now provides libsclang-dev
+      and libscsynth-dev
+
+  Mario Lang:
+    * Execute the scons install target.
+    * Patch SConstruct to avoid Emacs byte-compilation at build-time.
+    * Use a emcsen-install script to perform byte-compilation
+      at package install time to be conformant with Debian Emacs Policy.
+    * Put plugins in libscsynth0 so that both either client-only
+      installations (with internal server) and server only installations
+      (no client package installed) work correctly.
+    * Move .rtf docs to /usr/share/SuperCollider/Help (as upstream
+      does by default) and symlink from /usr/share/doc/supercollider-doc/Help.
+    * Build against latest jackd (closes: #317225)
+    * Revive test-sclang target and make it run at build time.
+    * supercollider suggests supercollider-doc.
+
+  Paul Brossier:
+    * Extension are now managed at install time. Changed sclang.cfg location
+      from /etc to /etc/supercollider to avoid loading old conffiles left over
+      from previous install. added a note in NEWS.Debian and updated manpage,
+      installed optional template in /usr/share/doc/supercollider
+    * Added conflict against supercollider (<< ${Source-Version}) to
+      libscsynth0 and libsclang0 to prevent file conflicts.
+    * Update test-sclang: replace LD_LIBRARY_PATH with LD_PRELOAD to make sure
+      newly libs are being used (and avoid a build-conflict against
+      supercollider binary), simplify the command line, activate noruntest
+      DEB_BUILD_OPTIONS to bypass run test
+    * Patch source/lang/LangSource/SC_LanguageClient.cpp to compile with
+      current g++ 4.0.
+    * Dropped unused libsigc++-dev, libtool and emacs21 Build-Deps
+
+ -- Paul Brossier <piem@debian.org>  Fri,  8 Jul 2005 03:59:30 +0100
+
+supercollider (20050424-1) unstable; urgency=low
+
+  * CVS update
+  * Added cvsupdate target to rules
+  * Added Psycollider to debian/non-free
+  * Moved 60SC_Lib_dlopen to dpatch
+  * Added 70fix_some_warnings patch to fix some warnings
+  * Fix sclang.cfg template in 80fix_sclang.cfg
+  * Added hand crafted simple icon to menu entries (closes: #299421)
+  * Bumped upstream version number to `date +%Y%m%d`
+  * Removed obsolete scfront and (wish | tk) Suggests
+
+ -- Paul Brossier <piem@altern.org>  Mon, 25 Apr 2005 15:23:43 +0100
+
+supercollider (050114-2) unstable; urgency=low
+
+  * Added Mario Lang <mlang@debian.org> to the Uploader field.
+  * Removed libhowl-dev from Build-Depends as howl is being removed (see
+    #289856) (closes: #295776)
+  * Removed odd comment about 64 bits: supercollider fails on many other
+    architectures. apparently anything but i386 and powerpc - and maybe mips
+    (see #274240, #276212 and #290339).
+
+ -- Paul Brossier <piem@altern.org>  Sun, 27 Feb 2005 20:12:23 +0000
+
+supercollider (050114-1) unstable; urgency=low
+
+  * Cvs update (closes: #289340)
+  * Modified startup script to move synthdefs to ~/.scsynthdefs/
+  * Fix clean and install time test in rules
+  * Removed automake1.7 dependancy.
+
+ -- Paul Brossier <piem@altern.org>  Sun, 16 Jan 2005 19:31:06 +0000
+
+supercollider (040926-3) unstable; urgency=low
+
+  * Adding sclang test to debian/rules to fail 64 bit builds.
+
+ -- Paul Brossier <piem@altern.org>  Sat,  8 Jan 2005 19:43:52 +0000
+
+supercollider (040926-2) unstable; urgency=low
+
+  * Asked for supercollider to be added to Packages-arch-specific
+  and for the 64-bit arch to be removed from archive (see: #276212)
+  * Back to Architecture: any in debian/control (closes: #274240)
+
+ -- Paul Brossier <piem@altern.org>  Wed, 13 Oct 2004 10:10:25 +0100
+
+supercollider (040926-1) unstable; urgency=low
+
+  * New upstream release (closes: #272379)
+  * Added missing BBCUT JITLib support (closes: #272255)
+  * Regenerated automake files
+  * Added missing \ in debian/scsynth.1
+  * Updated emacs menu entry to include emacs and tk.
+  * Dropped 64 bit architecture (closes: #274240)
+
+ -- Paul Brossier <piem@altern.org>  Thu,  7 Oct 2004 18:12:28 +0100
+
+supercollider (040808-1) unstable; urgency=high
+
+  * Cvs update
+  * Removed non-free files (see non-free in debian/), removed useless
+    inclusion and installation of non-free dlfcn.h, updated debian/copyright
+  * Dropped emacs19 emacs20 and xemacs21 Build-Depends, added recommends on
+    emacsen | emacs21, included Makefile within diff and dropped autotools-dev
+    Build-Depends.
+  * Trying again sparc compilation (closes: #260251)
+  * gcc-3.4 compilation fixed upstream (closes: #263817)
+  * Inclusion of bbcut within supercollider orig (closes: #264564)
+  * Added missing end of lines in diff and small script in debian/rules
+  * Reenabled CFLAGS=-Wall
+  * Added in linux input device compilation --enable-lid
+  * Avoid deletion of .rtfd directories, instead remove empty files called
+    .typeAttributes.dict
+  * Disabled empty Help button in scfront
+  * Removed README.debian and added menu entries for emacs mode
+  * Moved .desktop from /usr/share/gnome/apps/Multimedia to
+    /usr/share/applications.
+
+ -- Paul Brossier <piem@altern.org>  Mon, 16 Aug 2004 13:52:56 +0200
+
+supercollider (040719-1) unstable; urgency=low
+
+  * Cvs update
+  * Removed .cvsignore files in the archive
+  * Moved clz.h patch to dpatch
+  * Updated manpages, added sclang.real.1 and supercollider.1
+  * Made links to redundant manpages
+  * Removed README.Debian
+  * Fixed .DS_Store removal
+  * Trying again sparc compilation (closes: #260251)
+
+ -- Paul Brossier <piem@altern.org>  Fri,  6 Aug 2004 12:07:07 +0200
+
+supercollider (040709-2) unstable; urgency=low
+
+  * reFixed clz.h
+
+ -- Paul Brossier <piem@altern.org>  Sat, 17 Jul 2004 13:13:21 +0100
+
+supercollider (040709-1) unstable; urgency=low
+
+  * Added fix for emacs doc (closes: #255002) (patches/10)
+  * Avoid compression of RTF documentation
+  * Added compilation of x11 plugins (fixed configure.in and depends)
+  * Wrapper: added sclang and modified scsynth (now creates ~/synthdefs)
+  * Modified scfront patch (still buggy)
+  * Fixed spelling in scfront.1 manpage
+  * Fixed extMain.sc install using $(DESTDIR) (patches/40)
+  * Use dh_installemacsen and removed install of .elc
+  * Added emacsen-startup (not fully emacsen compliant yet)
+  * Removed .DS_Store files
+  * Updated README.Debian
+  * Completed supercollider.desktop entries
+  * Cvs update
+  * Added workaround 'cd SC_SYNTHDEF_PATH' to both wrapper
+
+ -- Paul Brossier <piem@altern.org>  Mon, 12 Jul 2004 18:40:06 +0100
+
+supercollider (040513-2) unstable; urgency=low
+
+  * Fixed clz.h (thanks again Guenter)
+  * added missing build deps (thanks G.Geiger)
+  * fixed sclang.wrapper
+
+ -- Paul Brossier <piem@altern.org>  Tue,  8 Jun 2004 17:04:06 +0100
+
+supercollider (040513-1) unstable; urgency=low
+
+  * upstream cvs update
+  * added new /etc/sclang.cfg conffile
+  * wrapped scsynth, renamed as scsynth.real
+    (adds default port and jacka connection)
+  * added manpages for scsynth, sclang and scfront (1)
+  * added scfront menu (icons anyone ?)
+  * small hack for make install in linux/examples
+
+ -- Paul Brossier <piem@altern.org>  Thu, 13 May 2004 23:48:26 +0100
+
+supercollider (040312-0test1) unstable; urgency=low
+
+  * upstream update
+  * removed empty changelog file
+  * updated plugins configure (fixed upstream)
+  * removed xlibs-dev dependancy (upstream)
+
+ -- Paul Brossier <piem@altern.org>  Sun, 14 Mar 2004 01:35:32 +0000
+
+supercollider (040301-0test2) unstable; urgency=low
+
+  * fixed missing plugins
+  * corrected dependancies
+  * added sclang.cfg, sclang.sc and some documentation
+  * added scfront (tk front-end)
+
+ -- Paul Brossier <piem@altern.org>  Mon,  8 Mar 2004 03:42:45 +0000
+
+supercollider (040301-1) unstable; urgency=low
+
+  * updated to last cvs
+  * added Emacs style files
+  * moved header files to supercollider-dev
+
+ -- Paul Brossier <piem@altern.org>  Mon,  1 Mar 2004 03:36:00 +0000
+
+supercollider (3.0-0test1) unstable; urgency=low
+
+  * debian/control: wrote build dependencies
+  * added locally generated configure script
+  * debian/rules: commented out the autoconf & co. commands
+  * added template manpages for scsynth and sclang
+
+ -- Free Ekanayaka <free@agnula.org>  Sat,  3 Jan 2004 10:44:07 +0100
+
+supercollider (3.0-1) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Paul Brossier <piem@altern.org>  Mon, 10 Nov 2003 01:41:48 +0000
+

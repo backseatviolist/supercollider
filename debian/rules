@@ -1,0 +1,52 @@
+#! /usr/bin/make -f
+
+include /usr/share/dpkg/architecture.mk
+
+ifeq ("$(DEB_HOST_ARCH_CPU)","ppc64el")
+	DEB_CFLAGS_MAINT_APPEND = -mno-altivec -mno-vsx
+	DEB_CXXFLAGS_MAINT_APPEND = -mno-altivec -mno-vsx
+endif
+
+DPKG_EXPORT_BUILDFLAGS = 1
+DEB_BUILD_MAINT_OPTIONS=hardening=+all
+include /usr/share/dpkg/default.mk
+
+%:
+	dh $@
+
+# supernova (optional alternative to scsynth) uses fancy simd things which fail to build on non-target architectures
+DEB_BUILD_SUPERNOVA = $(shell dh_listpackages -a | grep -q supercollider-supernova && echo on || echo off)
+
+DEB_CMAKE_EXTRA_FLAGS = \
+	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+	-DCMAKE_SKIP_RPATH=on \
+	-DDSO_VISIBILITY=on \
+	-DSC_EL_BYTECOMPILE=off \
+	-DSYSTEM_BOOST=on \
+	-DENABLE_TESTSUITE=off \
+	-DLIBSCSYNTH=on \
+	-DSYSTEM_YAMLCPP=off \
+	-DSUPERNOVA="$(DEB_BUILD_SUPERNOVA)"
+
+
+override_dh_auto_configure:
+	dh_auto_configure -- $(DEB_CMAKE_EXTRA_FLAGS)
+
+
+# Do not enable tests, they only test the supernova component, which only works on x86
+override_dh_auto_test:
+	@echo "Tests disabled"
+
+override_dh_auto_install:
+	dh_auto_install
+	install -m 644 debian/README.extensions \
+		$(CURDIR)/debian/tmp/usr/share/SuperCollider/Extensions/README
+# this needs to be an absolute not relative softlink,
+# because supercollider copies it around. hence not using dh_link for this.
+	ln -sf /usr/share/javascript/prettify/prettify.js $(CURDIR)/debian/tmp/usr/share/SuperCollider/HelpSource/prettify.js
+	install -d $(CURDIR)/debian/tmp/usr/share/applications
+	install -m 644 debian/scel.desktop $(CURDIR)/debian/tmp/usr/share/applications
+	install -m 644 debian/scvim.desktop $(CURDIR)/debian/tmp/usr/share/applications
+
+override_dh_installdocs:
+	dh_installdocs -A AUTHORS

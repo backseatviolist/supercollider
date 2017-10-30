@@ -1,0 +1,5 @@
+usr/include/SuperCollider/common
+usr/include/SuperCollider/server
+usr/include/SuperCollider/plugin_interface
+usr/include/SuperCollider/SCVersion.txt
+usr/lib/libscsynth.so

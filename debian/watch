@@ -1,0 +1,4 @@
+version=3
+
+opts=repack,repacksuffix=~repack,dversionmangle=s/~repack(-?[0-9]+)?$//,uversionmangle=s/-?([a-zA-Z]+[0-9])/~$1/ \
+  https://github.com/supercollider/supercollider/releases/latest .*/SuperCollider-(\d\S*)-Source-linux\.tar\.bz2

@@ -1,0 +1,210 @@
+Source: supercollider
+Section: sound
+Priority: optional
+Vcs-Git: https://anonscm.debian.org/git/pkg-multimedia/supercollider.git
+Vcs-Browser: https://anonscm.debian.org/git/pkg-multimedia/supercollider.git
+Maintainer: Debian Multimedia Packages Maintainers <pkg-multimedia-maintainers@lists.alioth.debian.org>
+Uploaders: Alexandre Quessy <alexandre@quessy.net>,
+ Dan Stowell <danstowell@users.sourceforge.net>,
+ Felipe Sateler <fsateler@debian.org>
+Build-Depends:
+ cmake (>= 2.8.12),
+ debhelper (>= 10~),
+ emacs | emacsen,
+ libasound2-dev [linux-any],
+ libavahi-client-dev,
+ libcwiid-dev,
+ libfftw3-dev,
+ libicu-dev,
+ libjack-dev,
+ libqt5core5a (>= 5.3),
+ libreadline-dev,
+ libsndfile1-dev (>= 1.0.16),
+ libudev-dev,
+ libxt-dev,
+ python-all-dev (>= 2.6.6-3~),
+ qtbase5-dev,
+ qt5-qmake,
+ qttools5-dev,
+ qttools5-dev-tools,
+ qtdeclarative5-dev,
+ libqt5opengl5-dev,
+ libqt5webkit5-dev,
+ qtpositioning5-dev,
+ libqt5sensors5-dev,
+ libboost-dev (>= 1.57),
+ libboost-date-time-dev (>= 1.57),
+ libboost-filesystem-dev (>= 1.57),
+ libboost-math-dev (>= 1.57),
+ libboost-program-options-dev (>= 1.57),
+ libboost-regex-dev (>= 1.57),
+ libboost-system-dev (>= 1.57),
+ libboost-test-dev (>= 1.57),
+ libboost-thread-dev (>= 1.57)
+Standards-Version: 4.1.0
+Homepage: http://supercollider.github.io
+
+Package: supercollider
+Architecture: any
+Depends: supercollider-language,
+ supercollider-server,
+ supercollider-ide,
+ ${misc:Depends},
+Recommends: supercollider-supernova
+Description: real time audio synthesis programming language
+ SuperCollider is an environment and programming language for real time
+ audio synthesis and algorithmic composition. It provides an interpreted
+ object-oriented language which functions as a network client
+ to a state of the art, realtime sound synthesis server.
+ .
+ This metapackage installs the standard core components of supercollider,
+ including the language, the synthesis server, and the code editor (IDE).
+
+Package: supercollider-language
+Architecture: any
+Depends: ${shlibs:Depends},
+ ${misc:Depends},
+ supercollider-common (= ${source:Version}),
+Recommends:
+ supercollider-server (= ${binary:Version}),
+Suggests: subversion,
+ supercollider-ide
+Breaks: supercollider (<= 1:3.5.3)
+Replaces: supercollider (<= 1:3.5.3)
+Description: real time audio synthesis programming language
+ SuperCollider is an environment and programming language for real time
+ audio synthesis and algorithmic composition. It provides an interpreted
+ object-oriented language which functions as a network client
+ to a state of the art, realtime sound synthesis server.
+ .
+ This package contains the language interpreter.
+
+Package: supercollider-common
+Architecture: all
+Depends: ${misc:Depends}, libjs-prettify
+Breaks: supercollider-server (<< 1:3.5),
+ supercollider-gedit (<< 1:3.7.0~repack-1~)
+Replaces: supercollider-doc,
+ supercollider-server (<< 1:3.5),
+ supercollider-gedit (<< 1:3.7.0~repack-1~)
+Description: common files for SuperCollider
+ SuperCollider is an environment and programming language for real time
+ audio synthesis and algorithmic composition. It provides an interpreted
+ object-oriented language which functions as a network client
+ to a state of the art, realtime sound synthesis server.
+ .
+ This package contains the architecture independent files for SuperCollider.
+
+Package: supercollider-server
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, jackd
+Description: real time audio synthesis server
+ SuperCollider is an environment and programming language for real time
+ audio synthesis and algorithmic composition. It provides an interpreted
+ object-oriented language which functions as a network client
+ to a state of the art, realtime sound synthesis server.
+ .
+ This package contains the synthesis server.
+
+Package: supercollider-ide
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends},
+ supercollider-language (>= ${source:Version})
+Description: integrated development environment for supercollider audio system
+ SuperCollider is an environment and programming language for real time
+ audio synthesis and algorithmic composition. It provides an interpreted
+ object-oriented language which functions as a network client
+ to a state of the art, realtime sound synthesis server.
+ .
+ This package contains the graphical IDE, the recommended interface for
+ working with SuperCollider code.
+
+Package: supercollider-supernova
+Architecture: any-i386 any-amd64 ia64
+Depends: ${shlibs:Depends}, ${misc:Depends}, jackd
+Description: real time audio synthesis server (multiprocessor version)
+ SuperCollider is an environment and programming language for real time
+ audio synthesis and algorithmic composition. It provides an interpreted
+ object-oriented language which functions as a network client
+ to a state of the art, realtime sound synthesis server.
+ .
+ This package contains the multiprocessor aware and parallelization capable
+ synthesis server supernova. Use of this server is manually enabled via a
+ Server.supernova call before starting the server. This server does not work
+ on i486 or i586 processors.
+
+Package: libscsynth1
+Architecture: any
+Depends: ${shlibs:Depends},
+ ${misc:Depends}
+Description: SuperCollider synthesis server library
+ SuperCollider is an environment and programming language for real time
+ audio synthesis and algorithmic composition. It provides an interpreted
+ object-oriented language which functions as a network client
+ to a state of the art, realtime sound synthesis server.
+ .
+ This package contains the shared library for the synthesis server.
+
+Package: supercollider-dev
+Architecture: any
+Depends: ${misc:Depends},
+ supercollider-language (= ${binary:Version}),
+ libsndfile1-dev (>= 1.0.16)
+Conflicts: supercollider-common-dev,
+ supercollider-server-dev
+Replaces: supercollider-common-dev,
+ supercollider-server-dev
+Provides: supercollider-common-dev,
+ supercollider-server-dev
+Description: development files for SuperCollider
+ SuperCollider is an environment and programming language for real time
+ audio synthesis and algorithmic composition. It provides an interpreted
+ object-oriented language which functions as a network client
+ to a state of the art, realtime sound synthesis server.
+ .
+ This package contains the development files and headers.
+
+Package: supercollider-emacs
+Architecture: all
+Depends: ${misc:Depends},
+  supercollider-language (>= ${source:Version}),
+  emacs | emacsen
+Recommends: w3m-el
+Description: SuperCollider mode for Emacs
+ SuperCollider is an environment and programming language for real time
+ audio synthesis and algorithmic composition. It provides an interpreted
+ object-oriented language which functions as a network client
+ to a state of the art, realtime sound synthesis server.
+ .
+ This package provides the SuperCollider mode for Emacs.
+
+Package: supercollider-vim
+Architecture: all
+Depends: ${misc:Depends},
+ supercollider-language (>= ${source:Version}),
+ vim | gvim,
+ ruby
+Recommends: unhtml | links,
+ vim-addon-manager
+Suggests: unrtf
+Description: SuperCollider mode for Vim
+ SuperCollider is an environment and programming language for real time
+ audio synthesis and algorithmic composition. It provides an interpreted
+ object-oriented language which functions as a network client
+ to a state of the art, realtime sound synthesis server.
+ .
+ This package provides the SuperCollider mode for Vim.
+
+
+Package: supercollider-gedit
+Architecture: all
+Depends: ${misc:Depends},
+  supercollider-language (>= ${source:Version}),
+  gedit (>=3.0.0)
+Description: SuperCollider mode for Gedit
+ SuperCollider is an environment and programming language for real time
+ audio synthesis and algorithmic composition. It provides an interpreted
+ object-oriented language which functions as a network client
+ to a state of the art, realtime sound synthesis server.
+ .
+ This package provides the SuperCollider mode for Gedit.

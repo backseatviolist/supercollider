@@ -1,0 +1,7 @@
+usr/bin/sclangpipe_app
+usr/bin/scvim
+usr/share/vim
+usr/share/scvim
+usr/share/SuperCollider/Extensions/scvim
+#debian/supercollider-vim.yaml usr/share/vim/registry/
+usr/share/applications/scvim.desktop

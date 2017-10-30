@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Name=SuperCollider Vim
+Comment=Vim environment for SuperCollider
+Exec=scvim
+Terminal=true
+Type=Application
+Icon=supercollider
+#cats as in menu-spec-1.0:
+Categories=Audio;AudioVideo;Music;
