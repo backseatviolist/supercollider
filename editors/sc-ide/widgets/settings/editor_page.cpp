@@ -178,7 +178,7 @@ void EditorPage::loadThemeFormats(Theme & theme)
         "currentLine", "searchResult", "matchingBrackets", "mismatchedBrackets",
         "evaluatedCode", "lineNumbers", "selection", "postwindowtext",
         "whitespace", "keyword", "built-in", "env-var", "class", "number",
-        "symbol", "string", "char", "comment", "primitive",
+        "symbol", "string", "char", "comment", "primitive", "operator",
         "postwindowerror", "postwindowwarning", "postwindowsuccess", "postwindowemphasis"
     };
 
@@ -190,6 +190,7 @@ void EditorPage::loadThemeFormats(Theme & theme)
             << tr("Keyword") << tr("Built-in Value") << tr("Environment Variable")
             << tr("Class") << tr("Number") << tr("Symbol") << tr("String") << tr("Char")
             << tr("Comment") << tr("Primitive")
+            << tr("Operator")
             << tr("Post Window Error") << tr("Post Window Warning") << tr("Post Window Success")
             << tr("Post Window Emphasis");
 

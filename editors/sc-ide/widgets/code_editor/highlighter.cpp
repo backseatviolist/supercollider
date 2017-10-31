@@ -60,6 +60,7 @@ void SyntaxHighlighterGlobals::applySettings( Settings::Manager *s )
     applySettings( s, "string", StringFormat );
     applySettings( s, "char", CharFormat );
     applySettings( s, "comment", CommentFormat );
+    applySettings( s, "operator", OperatorFormat );
 
     Q_EMIT(syntaxFormatsChanged());
 }
@@ -148,6 +149,10 @@ void SyntaxHighlighter::highlightBlockInCode(ScLexer & lexer)
 
         case Token::SymbolMark:
             setFormat(tokenPosition, tokenLength, formats[SymbolFormat]);
+            break;
+
+        case Token::Operator:
+            setFormat(tokenPosition, tokenLength, formats[OperatorFormat]);
             break;
 
         default:

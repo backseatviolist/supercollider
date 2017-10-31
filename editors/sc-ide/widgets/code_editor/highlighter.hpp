@@ -46,6 +46,7 @@ enum SyntaxFormat
     NumberFormat,
     EnvVarFormat,
     CommentFormat,
+    OperatorFormat,
 
     FormatCount
 };

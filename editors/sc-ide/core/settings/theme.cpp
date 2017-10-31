@@ -138,6 +138,7 @@ void Theme::fillDefault()
     addToTheme(mFormats, "char", QColor(0,115,0).lighter(shade));
     addToTheme(mFormats, "comment", QColor(191,0,0).lighter(shade));
     addToTheme(mFormats, "primitive", QColor(51,51,191).lighter(shade));
+    addToTheme(mFormats, "operator", QColor(Qt::black));
     addToTheme(mFormats, "lineNumbers", plt.color(QPalette::ButtonText),
                                         plt.color(QPalette::Mid));
     addToTheme(mFormats, "selection", plt.color(QPalette::HighlightedText),
@@ -168,6 +169,7 @@ void Theme::fillDark()
     addToTheme(mFormats, "char",               QColor("#ff55ff"));
     addToTheme(mFormats, "comment",            QColor("#d4b982"));
     addToTheme(mFormats, "primitive",          QColor("#aaff7f"));
+    addToTheme(mFormats, "operator",           QColor("#ffa4e2"));
     addToTheme(mFormats, "lineNumbers",        QColor("#cfcfcf"));
     addToTheme(mFormats, "selection",          QColor("#ff5500"));
     addToTheme(mFormats, "postwindowtext",     QColor("#e4e4e4"));
@@ -190,7 +192,7 @@ void Theme::fillUser(const QString & name, const Manager *settings)
     keys << "text" << "currentLine" << "searchResult" << "matchingBrackets"
          << "mismatchedBrackets" << "evaluatedCode" << "whitespace" << "keyword"
          << "built-in" << "env-var" << "class" << "number" << "symbol" << "string"
-         << "char" << "comment" << "primitive" << "lineNumbers" << "selection"
+         << "char" << "comment" << "primitive" << "operator" << "lineNumbers" << "selection"
          << "postwindowtext" << "postwindowerror" << "postwindowwarning"
          << "postwindowsuccess" << "postwindowemphasis";
 

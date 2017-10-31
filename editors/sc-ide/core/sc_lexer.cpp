@@ -70,7 +70,7 @@ void ScLexer::initLexicalRules()
 
     mLexicalRules << LexicalRule( Token::MultiLineCommentStart, "^/\\*" );
 
-    mLexicalRules << LexicalRule( Token::Operator, "^[\\+-\\*/&\\|\\^%<>=]+" );
+    mLexicalRules << LexicalRule( Token::Operator, "^[\\^@%&*\\-+=|<>?/]+" );
 }
 
 void ScLexer::initKeywordsRules()
