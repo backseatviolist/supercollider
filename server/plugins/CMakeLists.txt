@@ -121,6 +121,15 @@ add_library(ML_UGens MODULE
 	${scplugin_common_sources}
 )
 
+add_library(BufferUGens MODULE
+	BufferUGens/BufferUGens.hpp
+	BufferUGens/PlayBuf.hpp
+	BufferUGens/PlayBuf.cpp
+	BufferUGens/BufRd.hpp
+	BufferUGens/BufRd.cpp
+	BufferUGens/BufferUGens.cpp
+	)
+
 if(NOT NO_LIBSNDFILE)
 	set(diskio_sources DiskIO_UGens.cpp)
 
@@ -136,7 +145,7 @@ if(NOT NO_LIBSNDFILE)
 endif()
 
 set(fft_ugens FFT_UGens PV_ThirdParty ML_UGens)
-list(APPEND plugins FFT_UGens PV_ThirdParty ML_UGens)
+list(APPEND plugins FFT_UGens PV_ThirdParty ML_UGens BufferUGens)
 
 if (FFTW3F_FOUND)
 	include_directories (${FFTW3F_INCLUDE_DIR})
