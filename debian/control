@@ -32,15 +32,15 @@ Build-Depends:
  libqt5webkit5-dev,
  qtpositioning5-dev,
  libqt5sensors5-dev,
- libboost-dev (>= 1.62),
- libboost-date-time-dev (>= 1.62),
- libboost-filesystem-dev (>= 1.62),
- libboost-math-dev (>= 1.62),
- libboost-program-options-dev (>= 1.62),
- libboost-regex-dev (>= 1.62),
- libboost-system-dev (>= 1.62),
- libboost-test-dev (>= 1.62),
- libboost-thread-dev (>= 1.62)
+ libboost-dev (>= 1.57),
+ libboost-date-time-dev (>= 1.57),
+ libboost-filesystem-dev (>= 1.57),
+ libboost-math-dev (>= 1.57),
+ libboost-program-options-dev (>= 1.57),
+ libboost-regex-dev (>= 1.57),
+ libboost-system-dev (>= 1.57),
+ libboost-test-dev (>= 1.57),
+ libboost-thread-dev (>= 1.57)
 Standards-Version: 4.1.0
 Homepage: http://supercollider.github.io
 
