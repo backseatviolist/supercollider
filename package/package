@@ -93,11 +93,11 @@ SuperCollider-Source/testsuite/sclang/lpc' >> LinuxExclusions.txt
     if $debian; then
         source_dir="supercollider_$version"
         mv SuperCollider-Source $source_dir
-    fi
-    if ! $debian; then
+        tar cfzX "$filenamelinux" LinuxExclusions.txt "$source_dir"
+    else
         tar cfj "$filename" "$source_dir"
+        tar cfjX "$filenamelinux" LinuxExclusions.txt "$source_dir"
     fi
-    tar cfjX "$filenamelinux" LinuxExclusions.txt "$source_dir"
     rm -rf $source_dir SuperCollider-Source.tmp.tar
     exit
 else
