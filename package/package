@@ -7,6 +7,7 @@ if [ $basename != "package" ]; then
 fi
 
 version=`date "+%Y-%m-%d"`
+debian=false
 include_optionals=false
 if [ `uname` = 'Darwin' ]; then
 	package_type="osx"
@@ -14,7 +15,7 @@ else
 	package_type="source"
 fi
 
-while getopts ":v:os" Option
+while getopts ":v:osd" Option
 do
   case $Option in
     v ) version=$OPTARG
@@ -23,9 +24,21 @@ do
         ;;
     s ) package_type="source"
         ;;
+    d ) debian=true
   esac
 done
 shift $(($OPTIND - 1))
+
+if $debian; then
+    if $include_optionals; then
+        echo "'-o' with '-d' does not make sense"
+        exit 1
+    fi
+    if [[ $version == *"-"* ]]; then
+        echo "Please provide a valid version string (use '~' instead of '-' characters)."
+        exit 1
+    fi
+fi
 
 revision=`git rev-list HEAD -1 | sed -E 's/([[:alnum:]]{1,10}).*/\1/'`
 if [ "`git status -s -uno`" != "" ]; then
@@ -47,7 +60,9 @@ if [ $package_type == "source" ]; then
         --exclude "SuperCollider-Source/external_libraries/nova-tt/boost_lockfree" \
         -f SuperCollider-Source.tmp.tar
 
-    if $include_optionals; then
+    if $debian; then
+        filenamelinux="supercollider_$version.orig.tar.gz"
+    elif $include_optionals; then
         cp -Rp optional SuperCollider-Source/optional_installs
         cp OPTIONALS_README_SOURCE.txt SuperCollider-Source/optional_installs/README.txt
         filename="SuperCollider-$version-Source-With-Extras.tar.bz2"
@@ -74,9 +89,16 @@ SuperCollider-Source/lang/LangPrimSource/HID_Utilities
 SuperCollider-Source/lang/LangPrimSource/WiiMote_OSX
 SuperCollider-Source/testsuite/sclang/lpc' >> LinuxExclusions.txt
 
-    tar cfj "$filename" SuperCollider-Source
-    tar cfjX "$filenamelinux" LinuxExclusions.txt SuperCollider-Source
-    rm -rf SuperCollider-Source SuperCollider-Source.tmp.tar
+    source_dir="SuperCollider-Source"
+    if $debian; then
+        source_dir="supercollider_$version"
+        mv SuperCollider-Source $source_dir
+    fi
+    if ! $debian; then
+        tar cfj "$filename" "$source_dir"
+    fi
+    tar cfjX "$filenamelinux" LinuxExclusions.txt "$source_dir"
+    rm -rf $source_dir SuperCollider-Source.tmp.tar
     exit
 else
     if [ -d SuperCollider ]; then
