@@ -29,11 +29,14 @@ BOOST_AUTO_TEST_CASE(nathan) {
     }
     Group* root_group = (Group*)root_node;
 
-
+    UnitSpec* unit_spec = new UnitSpec;
 
 /*
     Graph_New(world, graph_def, node_id, &args, &graph, arg_type);
     Group_AddHead(root_node, &graph->mNode);
+
+
+    Unit_New(world, unit_spec, memory)
 */
 
     // World_Run(world);
