@@ -77,7 +77,7 @@ deploy:
    prerelease: true
    skip_cleanup: true
    on:
-     condition: -z $GITHUB_KEY
+     condition: ! -z $GITHUB_KEY
      tags: true
      all_branches: true
 
