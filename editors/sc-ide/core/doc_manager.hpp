@@ -167,7 +167,6 @@ public:
     void create();
     void close( Document * );
     bool save( Document *, bool forceChoose = false, bool saveInExtensionFolder = false );
-    bool saveAs( Document *, bool saveInExtensionFolder );
     bool reload( Document * );
     bool needRestore();
     void restore();
@@ -207,6 +206,7 @@ private:
                                const QByteArray & id = QByteArray(),
                                const QString & title = QString(),
                                const QString & text = QString()  );
+    bool trySaveAs( Document *, bool saveInExtensionFolder );
     bool trySave( Document *, const QString & path );
     QString documentSavePath( Document * ) const;
     void addToRecent( Document * );

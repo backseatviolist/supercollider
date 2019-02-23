@@ -527,17 +527,26 @@ bool DocumentManager::save( Document *doc, bool forceChoose, bool saveInExtensio
             QMessageBox::warning(MainWindow::instance(), tr("Saving read-only file"),
                                  tr("File is read-only. Please select a new location to save to."),
                                  QMessageBox::Ok, QMessageBox::NoButton);
-
+            return false;
         }
     }
 
+    // TODO: better to split this into separate methods.
+    bool ok = false;
     if (forceChoose || !documentHasPath || !fileIsWritable) {
-        return saveAs(doc, saveInExtensionFolder);
-    } else
-        return trySave(doc, doc->mFilePath);
+        ok = trySaveAs(doc, saveInExtensionFolder);
+    } else {
+        ok = trySave(doc, doc->mFilePath);
+    }
+    if (!ok) {
+        QMessageBox::warning(MainWindow::instance(), tr("Saving failed"),
+                             tr("Could not save file. Please try a different directory."),
+                             QMessageBox::Ok, QMessageBox::NoButton);
+    }
+    return ok;
 }
 
-bool DocumentManager::saveAs( Document *doc, bool saveInExtensionFolder )
+bool DocumentManager::trySaveAs( Document *doc, bool saveInExtensionFolder )
 {
     Q_ASSERT(doc);
 
