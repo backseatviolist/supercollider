@@ -167,7 +167,7 @@ public:
     void create();
     void close( Document * );
     bool save( Document *, bool forceChoose = false, bool saveInExtensionFolder = false );
-    bool saveAs( Document *, const QString & path );
+    bool saveAs( Document *, bool saveInExtensionFolder );
     bool reload( Document * );
     bool needRestore();
     void restore();

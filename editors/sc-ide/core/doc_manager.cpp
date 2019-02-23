@@ -510,7 +510,7 @@ QString DocumentManager::documentSavePath( Document *doc ) const
     return QStandardPaths::standardLocations( QStandardPaths::HomeLocation )[0];
 }
 
-bool DocumentManager::save( Document *doc, bool forceChoose, bool saveInExtensionFolder )
+bool DocumentManager::save( Document *doc, bool forceChoose, bool saveInExtensionFolder)
 {
     Q_ASSERT(doc);
     const bool documentHasPath = !doc->filePath().isEmpty();
@@ -532,100 +532,94 @@ bool DocumentManager::save( Document *doc, bool forceChoose, bool saveInExtensio
     }
 
     if (forceChoose || !documentHasPath || !fileIsWritable) {
-
-        QFileDialog dialog(MainWindow::instance());
-        dialog.setAcceptMode( QFileDialog::AcceptSave );
-        dialog.setFileMode( QFileDialog::AnyFile );
-
-        QStringList filters = QStringList()
-                              << tr("All Files (*)")
-                              << tr("SuperCollider Document (*.scd)")
-                              << tr("SuperCollider Class File (*.sc)")
-                              << tr("SuperCollider Help Source (*.schelp)");
-
-        dialog.setNameFilters(filters);
-
-        if (saveInExtensionFolder) {
-            dialog.setDirectory( standardDirectory(ScExtensionUserDir) );
-        } else {
-            QString path = documentSavePath(doc);
-            QFileInfo path_info(path);
-
-            if (path_info.isDir())
-                // FIXME:
-                // KDE native file dialog shows parent directory instead (KDE bug 229375)
-                dialog.setDirectory(path);
-            else
-                dialog.selectFile(path);
-
-            // NOTE: do not use QFileDialog::setDefaultSuffix(), because it only adds
-            // the suffix after the dialog is closed, without showing a warning if the
-            // filepath with added suffix already exists!
-        }
-
-#ifdef Q_OS_MAC
-        QWidget *last_active_window = QApplication::activeWindow();
-#endif
-
-        int result = dialog.exec();
-
-        // FIXME: workaround for Qt bug 25295
-        // See SC issue #678
-#ifdef Q_OS_MAC
-        if (last_active_window)
-            last_active_window->activateWindow();
-#endif
-
-        QString save_path;
-
-        if (result == QDialog::Accepted) {
-            save_path = dialog.selectedFiles()[0];
-
-            if (save_path.indexOf('.') == -1 && !QFile::exists(save_path)) {
-                save_path.append(".scd");
-                QFileInfo save_path_info(save_path);
-                if (save_path_info.exists())
-                {
-                    QString msg =
-                            tr("Extenstion \".scd\" was automatically added to the "
-                               "selected file name, but the file \"%1\" already exists.\n\n"
-                               "Do you wish to overwrite it?")
-                            .arg(save_path_info.fileName());
-                    QMessageBox::StandardButton result =
-                            QMessageBox::warning(MainWindow::instance(),
-                                                 tr("Overwrite File?"),
-                                                 msg,
-                                                 QMessageBox::Yes | QMessageBox::No);
-                    if (result != QMessageBox::Yes)
-                        save_path.clear();
-                }
-            }
-        }
-
-        if (!save_path.isEmpty()) {
-            if( !saveInExtensionFolder )
-                mLastDocumentSavePath = save_path;
-            return saveAs(doc, save_path);
-        } else {
-            return false;
-        }
+        return saveAs(doc, saveInExtensionFolder);
     } else
         return trySave(doc, doc->mFilePath);
 }
 
-bool DocumentManager::saveAs( Document *doc, const QString & path )
+bool DocumentManager::saveAs( Document *doc, bool saveInExtensionFolder )
 {
     Q_ASSERT(doc);
 
-    if (path.isEmpty()) {
-        qWarning() << "DocumentManager: the saving path is empty.";
-        return false;
+    QFileDialog dialog(MainWindow::instance());
+    dialog.setAcceptMode( QFileDialog::AcceptSave );
+    dialog.setFileMode( QFileDialog::AnyFile );
+
+    QStringList filters = QStringList()
+                          << tr("All Files (*)")
+                          << tr("SuperCollider Document (*.scd)")
+                          << tr("SuperCollider Class File (*.sc)")
+                          << tr("SuperCollider Help Source (*.schelp)");
+
+    dialog.setNameFilters(filters);
+
+    if (saveInExtensionFolder) {
+        dialog.setDirectory( standardDirectory(ScExtensionUserDir) );
+    } else {
+        QString path = documentSavePath(doc);
+        QFileInfo path_info(path);
+
+        if (path_info.isDir())
+            // FIXME:
+            // KDE native file dialog shows parent directory instead (KDE bug 229375)
+            dialog.setDirectory(path);
+        else
+            dialog.selectFile(path);
+
+        // NOTE: do not use QFileDialog::setDefaultSuffix(), because it only adds
+        // the suffix after the dialog is closed, without showing a warning if the
+        // filepath with added suffix already exists!
     }
 
-    bool ok = trySave( doc, path );
-    if (ok)
-        addToRecent(doc);
-    return ok;
+#ifdef Q_OS_MAC
+    QWidget *last_active_window = QApplication::activeWindow();
+#endif
+
+    int result = dialog.exec();
+
+    // FIXME: workaround for Qt bug 25295
+    // See SC issue #678
+#ifdef Q_OS_MAC
+    if (last_active_window)
+        last_active_window->activateWindow();
+#endif
+
+    QString save_path;
+
+    if (result == QDialog::Accepted) {
+        save_path = dialog.selectedFiles()[0];
+
+        if (save_path.indexOf('.') == -1 && !QFile::exists(save_path)) {
+            save_path.append(".scd");
+            QFileInfo save_path_info(save_path);
+            if (save_path_info.exists())
+            {
+                QString msg =
+                        tr("Extenstion \".scd\" was automatically added to the "
+                           "selected file name, but the file \"%1\" already exists.\n\n"
+                           "Do you wish to overwrite it?")
+                        .arg(save_path_info.fileName());
+                QMessageBox::StandardButton result =
+                        QMessageBox::warning(MainWindow::instance(),
+                                             tr("Overwrite File?"),
+                                             msg,
+                                             QMessageBox::Yes | QMessageBox::No);
+                if (result != QMessageBox::Yes)
+                    save_path.clear();
+            }
+        }
+    }
+
+    if (!save_path.isEmpty()) {
+        if( !saveInExtensionFolder )
+            mLastDocumentSavePath = save_path;
+        bool ok = trySave(doc, save_path);
+        if (ok)
+            addToRecent(doc);
+        return ok;
+    } else {
+        return false;
+    }
 }
 
 bool DocumentManager::trySave( Document *doc, const QString & path )
