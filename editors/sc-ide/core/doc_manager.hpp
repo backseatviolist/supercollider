@@ -207,7 +207,7 @@ private:
                                const QByteArray & id = QByteArray(),
                                const QString & title = QString(),
                                const QString & text = QString()  );
-    bool doSaveAs( Document *, const QString & path );
+    bool trySave( Document *, const QString & path );
     void addToRecent( Document * );
     void loadRecentDocuments( Settings::Manager * );
     QStringList tmpFiles();

@@ -496,7 +496,7 @@ bool DocumentManager::save( Document *doc )
 {
     Q_ASSERT(doc);
 
-    return doSaveAs( doc, doc->mFilePath );
+    return trySave( doc, doc->mFilePath );
 }
 
 bool DocumentManager::saveAs( Document *doc, const QString & path )
@@ -508,13 +508,13 @@ bool DocumentManager::saveAs( Document *doc, const QString & path )
         return false;
     }
 
-    bool ok = doSaveAs( doc, path );
+    bool ok = trySave( doc, path );
     if (ok)
         addToRecent(doc);
     return ok;
 }
 
-bool DocumentManager::doSaveAs( Document *doc, const QString & path )
+bool DocumentManager::trySave( Document *doc, const QString & path )
 {
     Q_ASSERT(doc);
 
