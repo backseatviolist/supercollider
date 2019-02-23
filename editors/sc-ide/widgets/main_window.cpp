@@ -959,7 +959,7 @@ bool MainWindow::close( Document *doc )
         case QMessageBox::Cancel:
             return false;
         case QMessageBox::Save:
-            if (!MainWindow::save(doc))
+            if (!Main::instance()->documentManager()->save(doc))
                 return false;
             break;
         default:;
@@ -991,126 +991,6 @@ bool MainWindow::reload( Document *doc )
     }
 
     return Main::instance()->documentManager()->reload(doc);
-}
-
-QString MainWindow::documentSavePath( Document *document ) const
-{
-    if (!document->filePath().isEmpty())
-        return document->filePath();
-
-    if (!mLastDocumentSavePath.isEmpty())
-        return QFileInfo(mLastDocumentSavePath).path();
-
-    QString interpreterWorkingDir =
-            Main::settings()->value("IDE/interpreter/runtimeDir").toString();
-    if (!interpreterWorkingDir.isEmpty())
-        return interpreterWorkingDir;
-
-    return QStandardPaths::standardLocations( QStandardPaths::HomeLocation )[0];
-}
-
-bool MainWindow::save( Document *doc, bool forceChoose, bool saveInExtensionFolder )
-{
-    const bool documentHasPath = !doc->filePath().isEmpty();
-
-    if (!forceChoose && !(doc->isModified()) && documentHasPath)
-        return true;
-
-    DocumentManager *documentManager = Main::instance()->documentManager();
-
-    bool fileIsWritable = true;
-    if ((!forceChoose) && documentHasPath) {
-        QFileInfo fileInfo(doc->filePath());
-        fileIsWritable = fileInfo.isWritable();
-
-        if (!fileIsWritable) {
-            QMessageBox::warning(instance(), tr("Saving read-only file"),
-                                 tr("File is read-only. Please select a new location to save to."),
-                                 QMessageBox::Ok, QMessageBox::NoButton);
-
-        }
-    }
-
-    if (forceChoose || !documentHasPath || !fileIsWritable) {
-
-        QFileDialog dialog(mInstance);
-        dialog.setAcceptMode( QFileDialog::AcceptSave );
-        dialog.setFileMode( QFileDialog::AnyFile );
-
-        QStringList filters = QStringList()
-                              << tr("All Files (*)")
-                              << tr("SuperCollider Document (*.scd)")
-                              << tr("SuperCollider Class File (*.sc)")
-                              << tr("SuperCollider Help Source (*.schelp)");
-
-        dialog.setNameFilters(filters);
-
-        if (saveInExtensionFolder) {
-            dialog.setDirectory( standardDirectory(ScExtensionUserDir) );
-        } else {
-            QString path = mInstance->documentSavePath(doc);
-            QFileInfo path_info(path);
-
-            if (path_info.isDir())
-                // FIXME:
-                // KDE native file dialog shows parent directory instead (KDE bug 229375)
-                dialog.setDirectory(path);
-            else
-                dialog.selectFile(path);
-
-            // NOTE: do not use QFileDialog::setDefaultSuffix(), because it only adds
-            // the suffix after the dialog is closed, without showing a warning if the
-            // filepath with added suffix already exists!
-        }
-
-#ifdef Q_OS_MAC
-        QWidget *last_active_window = QApplication::activeWindow();
-#endif
-
-        int result = dialog.exec();
-
-        // FIXME: workaround for Qt bug 25295
-        // See SC issue #678
-#ifdef Q_OS_MAC
-        if (last_active_window)
-            last_active_window->activateWindow();
-#endif
-
-        QString save_path;
-
-        if (result == QDialog::Accepted) {
-            save_path = dialog.selectedFiles()[0];
-
-            if (save_path.indexOf('.') == -1 && !QFile::exists(save_path)) {
-                save_path.append(".scd");
-                QFileInfo save_path_info(save_path);
-                if (save_path_info.exists())
-                {
-                    QString msg =
-                            tr("Extenstion \".scd\" was automatically added to the "
-                               "selected file name, but the file \"%1\" already exists.\n\n"
-                               "Do you wish to overwrite it?")
-                            .arg(save_path_info.fileName());
-                    QMessageBox::StandardButton result =
-                            QMessageBox::warning(mInstance,
-                                                 tr("Overwrite File?"),
-                                                 msg,
-                                                 QMessageBox::Yes | QMessageBox::No);
-                    if (result != QMessageBox::Yes)
-                        save_path.clear();
-                }
-            }
-        }
-
-        if (!save_path.isEmpty()) {
-            if( !saveInExtensionFolder )
-                mInstance->mLastDocumentSavePath = save_path;
-            return documentManager->saveAs(doc, save_path);
-        } else {
-            return false;
-        }
-    } else
-        return documentManager->save(doc);
 }
 
 void MainWindow::newDocument()
@@ -1238,7 +1118,7 @@ void MainWindow::saveDocument()
     Document *doc = editor->document();
     Q_ASSERT(doc);
 
-    MainWindow::save(doc);
+    Main::instance()->documentManager()->save(doc);
 }
 
 void MainWindow::saveDocumentAs()
@@ -1249,7 +1129,7 @@ void MainWindow::saveDocumentAs()
     Document *doc = editor->document();
     Q_ASSERT(doc);
 
-    MainWindow::save(doc, true);
+    Main::instance()->documentManager()->save(doc, true);
 }
 
 void MainWindow::saveDocumentAsExtension()
@@ -1260,14 +1140,14 @@ void MainWindow::saveDocumentAsExtension()
     Document *doc = editor->document();
     Q_ASSERT(doc);
 
-    MainWindow::save(doc, true, true);
+    Main::instance()->documentManager()->save(doc, true, true);
 }
 
 void MainWindow::saveAllDocuments()
 {
     QList<Document*> docs = mMain->documentManager()->documents();
     foreach (Document *doc, docs)
-        if (!MainWindow::save(doc))
+        if (!Main::instance()->documentManager()->save(doc))
             return;
 }
 

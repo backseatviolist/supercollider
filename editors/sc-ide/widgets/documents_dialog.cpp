@@ -179,7 +179,7 @@ void DocumentsDialog::saveSelected()
         Item *itm = item(i);
         if ( itm->isChecked() )
         {
-            if ( !MainWindow::save(itm->document()) )
+            if ( !Main::documentManager()->save(itm->document()) )
                 return;
             delete itm;
         }

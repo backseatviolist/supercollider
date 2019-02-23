@@ -166,7 +166,7 @@ public:
 
     void create();
     void close( Document * );
-    bool save( Document * );
+    bool save( Document *, bool forceChoose = false, bool saveInExtensionFolder = false );
     bool saveAs( Document *, const QString & path );
     bool reload( Document * );
     bool needRestore();
@@ -208,6 +208,7 @@ private:
                                const QString & title = QString(),
                                const QString & text = QString()  );
     bool trySave( Document *, const QString & path );
+    QString documentSavePath( Document * ) const;
     void addToRecent( Document * );
     void loadRecentDocuments( Settings::Manager * );
     QStringList tmpFiles();
@@ -246,10 +247,12 @@ private:
     static const int mMaxRecent = 10;
     
     bool mTextMirrorEnabled;
+    QString mLastDocumentSavePath;
     QString mCurrentDocumentPath;
     class Document * mCurrentDocument;
     bool mGlobalKeyDownEnabled, mGlobalKeyUpEnabled;
     QStandardItemModel * mDocumentModel;
+    
 };
 
 } // namespace ScIDE

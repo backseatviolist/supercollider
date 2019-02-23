@@ -127,7 +127,6 @@ public:
     Settings::Manager *setting();
 
     static bool close( Document * );
-    static bool save( Document *, bool forceChoose = false, bool saveInExtensionFolder = false );
     static bool reload( Document * );
 
     void restoreDocuments();
@@ -212,7 +211,6 @@ private:
     void toggleInterpreterActions( bool enabled);
     void applyCursorBlinkingSettings( Settings::Manager * );
     QString documentOpenPath() const;
-    QString documentSavePath( Document * ) const;
 
     Main *mMain;
 
@@ -241,8 +239,6 @@ private:
 
     QSignalMapper mCodeEvalMapper;
     DocumentsDialog * mDocDialog;
-
-    QString mLastDocumentSavePath;
 
     static MainWindow *mInstance;
 };
